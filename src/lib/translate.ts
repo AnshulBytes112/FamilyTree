@@ -63,11 +63,17 @@ export async function translateText(text: string | null | undefined, targetLang:
 
     if (translated) {
       // 4. Save to Database Cache (async, don't await so we don't block)
-      supabase.from('translations').insert({
-        source_text: text,
-        target_language: targetLang,
-        translated_text: translated
-      }).then(() => {}).catch(err => console.error("Failed to cache translation", err));
+      (async () => {
+        const { error } = await supabase.from('translations').insert({
+          source_text: text,
+          target_language: targetLang,
+          translated_text: translated
+        });
+        if (error && error.code !== '42P01') {
+          // Ignore relation "translations" does not exist if migration hasn't run
+          console.error("Failed to cache translation", error);
+        }
+      })();
 
       // Save to memory cache
       memoryCache.set(cacheKey, translated);
