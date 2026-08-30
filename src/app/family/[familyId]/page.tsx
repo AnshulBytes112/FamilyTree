@@ -37,26 +37,40 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
     .single();
 
   if (!session || !session.users) redirect('/');
-  const user = session.users;
+  const user: any = Array.isArray(session.users) ? session.users[0] : session.users;
 
-  // Static mockup data
+  // Real data
+  const { count: peopleCount } = await supabase
+    .from('people')
+    .select('id', { count: 'exact', head: true })
+    .eq('family_id', resolvedParams.familyId);
+
+  const { count: contributorCount } = await supabase
+    .from('family_memberships')
+    .select('id', { count: 'exact', head: true })
+    .eq('family_id', resolvedParams.familyId);
+
+  const { data: recentPeople } = await supabase
+    .from('people')
+    .select('id, name, created_at')
+    .eq('family_id', resolvedParams.familyId)
+    .order('created_at', { ascending: false })
+    .limit(3);
+
   const stats = [
-    { label: t('stats.members'), value: "128" },
-    { label: t('stats.generations'), value: "6" },
-    { label: t('stats.branches'), value: "8" },
-    { label: t('stats.photos'), value: "342" },
+    { label: t('stats.members'), value: peopleCount || 0 },
+    { label: t('stats.contributors', { defaultMessage: 'Contributors' }), value: contributorCount || 1 },
+    { label: t('stats.generations'), value: "—" }, // Coming later
   ];
 
-  const recentMembers = [
-    { name: "Rohit Sharma", time: "2 days ago", img: "R" },
-    { name: "Priya Sharma", time: "3 days ago", img: "P" },
-    { name: "Karan Verma", time: "5 days ago", img: "K" },
-  ];
+  const recentMembers = (recentPeople || []).map(p => ({
+    name: p.name,
+    time: new Date(p.created_at).toLocaleDateString(),
+    img: p.name.charAt(0).toUpperCase()
+  }));
 
   const recentActivity = [
-    { text: "You added Rohit Sharma", time: "2 days ago", icon: "user", color: "bg-blue-100 text-blue-600" },
-    { text: "Priya Sharma updated her profile", time: "3 days ago", icon: "update", color: "bg-blue-100 text-blue-600" },
-    { text: "Karan Verma was added", time: "5 days ago", icon: "add", color: "bg-red-100 text-red-600" },
+    { text: "Dashboard activity tracking coming soon", time: "Just now", icon: "update", color: "bg-blue-100 text-blue-600" }
   ];
 
   return (
@@ -74,34 +88,22 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
         </div>
         
         <nav className="flex-1 py-6 px-4 space-y-1">
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 bg-emerald-700 text-white rounded-lg font-medium text-sm">
+          <Link href={`/family/${resolvedParams.familyId}`} className="flex items-center gap-3 px-3 py-2.5 bg-emerald-700 text-white rounded-lg font-medium text-sm">
             <LayoutDashboard size={18} />
             {t('nav.dashboard')}
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
-            <Network size={18} />
-            {t('nav.familyTree')}
-          </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
+          <Link href={`/family/${resolvedParams.familyId}/people`} className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
             <Users size={18} />
             {t('nav.people')}
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
-            <GitBranch size={18} />
-            {t('nav.branches')}
-          </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
+          <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 font-medium text-sm cursor-not-allowed">
+            <Network size={18} />
+            {t('nav.familyTree')} <span className="text-[10px] ml-auto bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Soon</span>
+          </div>
+          <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 font-medium text-sm cursor-not-allowed">
             <Search size={18} />
-            {t('nav.relationshipFinder')}
-          </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
-            <ImageIcon size={18} />
-            {t('nav.photos')}
-          </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
-            <Calendar size={18} />
-            {t('nav.events')}
-          </Link>
+            {t('nav.relationshipFinder')} <span className="text-[10px] ml-auto bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Soon</span>
+          </div>
           <Link href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
             <Settings size={18} />
             {t('nav.settings')}
@@ -123,7 +125,7 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
             <p className="text-slate-500 font-medium">{t('header.welcome', { name: user.name })}</p>
           </div>
           <Link 
-            href={`/family/${resolvedParams.familyId}/invite`} 
+            href={`/family/${resolvedParams.familyId}/people/new`} 
             className={cn(buttonVariants({ size: "default" }), "bg-emerald-700 hover:bg-emerald-800 text-white rounded-md")}
           >
             <Plus size={16} className="mr-2" /> {t('header.addPerson')}
@@ -151,21 +153,25 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
               <h3 className="font-semibold text-slate-900">{t('recentMembers.title')}</h3>
             </div>
             <CardContent className="p-0">
-              <ul className="divide-y divide-slate-100">
-                {recentMembers.map((member, i) => (
-                  <li key={i} className="flex items-center gap-4 p-4 hover:bg-slate-50/50 transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 shrink-0">
-                      {member.img}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-slate-900 text-sm truncate">{member.name}</p>
-                      <p className="text-xs text-slate-500 truncate">{member.time}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              {recentMembers.length === 0 ? (
+                <p className="p-6 text-sm text-slate-500">No members added yet.</p>
+              ) : (
+                <ul className="divide-y divide-slate-100">
+                  {recentMembers.map((member, i) => (
+                    <li key={i} className="flex items-center gap-4 p-4 hover:bg-slate-50/50 transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 shrink-0">
+                        {member.img}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-slate-900 text-sm truncate">{member.name}</p>
+                        <p className="text-xs text-slate-500 truncate">{member.time}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
               <div className="p-4 pt-2">
-                <button className="text-emerald-700 text-sm font-semibold hover:underline">{t('recentMembers.viewAll')}</button>
+                <Link href={`/family/${resolvedParams.familyId}/people`} className="text-emerald-700 text-sm font-semibold hover:underline">{t('recentMembers.viewAll')}</Link>
               </div>
             </CardContent>
           </Card>

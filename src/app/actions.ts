@@ -62,7 +62,7 @@ export async function createFamilyAction(prevState: any, formData: FormData) {
 
   const validated = createFamilySchema.safeParse(rawData);
   if (!validated.success) {
-    return { error: validated.error.errors[0].message };
+    return { error: validated.error.issues[0].message };
   }
 
   const { familyName, userName } = validated.data;
@@ -109,7 +109,7 @@ export async function joinFamilyAction(prevState: any, formData: FormData) {
 
   const validated = joinFamilySchema.safeParse(rawData);
   if (!validated.success) {
-    return { error: validated.error.errors[0].message };
+    return { error: validated.error.issues[0].message };
   }
 
   const { inviteCode, userName } = validated.data;

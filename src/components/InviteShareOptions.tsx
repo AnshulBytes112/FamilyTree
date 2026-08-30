@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Facebook, Mail, MoreHorizontal, MessageCircle } from 'lucide-react';
+import { Mail, MoreHorizontal, MessageCircle, Share } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export function InviteShareOptions({ inviteCode, familyId }: { inviteCode: string | null, familyId: string }) {
@@ -68,7 +68,7 @@ export function InviteShareOptions({ inviteCode, familyId }: { inviteCode: strin
               <MessageCircle size={14} className="mr-2 text-[#25D366]" /> {t('shareSection.whatsapp')}
             </Button>
             <Button variant="outline" size="sm" className="h-9 px-3 border-slate-200 hover:bg-slate-50 text-slate-600">
-              <Facebook size={14} className="mr-2 text-[#1877F2]" /> {t('shareSection.facebook')}
+              <Share size={14} className="mr-2 text-[#1877F2]" /> {t('shareSection.facebook')}
             </Button>
             <Button variant="outline" size="sm" className="h-9 px-3 border-slate-200 hover:bg-slate-50 text-slate-600">
               <Mail size={14} className="mr-2 text-slate-400" /> {t('shareSection.email')}

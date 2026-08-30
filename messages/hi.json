@@ -2,7 +2,8 @@
   "common": {
     "loading": "लोड हो रहा है...",
     "error": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
-    "back": "वापस"
+    "back": "वापस",
+    "edit": "संपादित करें"
   },
   "landing": {
     "nav": {
@@ -71,7 +72,8 @@
       "members": "सदस्य",
       "generations": "पीढ़ियाँ",
       "branches": "शाखाएं",
-      "photos": "तस्वीरें"
+      "photos": "तस्वीरें",
+      "contributors": "योगदानकर्ता"
     },
     "recentMembers": {
       "title": "हाल ही में जोड़े गए सदस्य",
@@ -104,5 +106,50 @@
       "joined": "शामिल हो गए",
       "pending": "लंबित"
     }
+  },
+  "people": {
+    "personAdded": "व्यक्ति जोड़ा गया",
+    "personAddedDesc": "{name} को आपके परिवार में जोड़ दिया गया है।",
+    "whatNext": "आप आगे क्या करना चाहेंगे?",
+    "addRelationshipsBtn": "रिश्ते जोड़ें",
+    "addAnotherPersonBtn": "एक और व्यक्ति जोड़ें",
+    "viewPersonBtn": "व्यक्ति को देखें",
+    "addFamilyMember": "परिवार के सदस्य को जोड़ें",
+    "whoToAdd": "आप किसे जोड़ना चाहेंगे?",
+    "nameLabel": "नाम",
+    "namePlaceholder": "पूरा नाम",
+    "genderLabel": "लिंग",
+    "genderMale": "पुरुष",
+    "genderFemale": "महिला",
+    "genderOther": "अन्य",
+    "genderUnknown": "निर्दिष्ट नहीं करना चाहते",
+    "dobLabel": "जन्म तिथि",
+    "dodLabel": "मृत्यु तिथि",
+    "pobLabel": "जन्म स्थान",
+    "porLabel": "निवास स्थान",
+    "notesLabel": "नोट्स",
+    "optional": "वैकल्पिक",
+    "addPersonBtn": "व्यक्ति जोड़ें",
+    "directory": "लोग",
+    "familyMember": "परिवार का सदस्य",
+    "family": "परिवार",
+    "father": "पिता",
+    "mother": "माता",
+    "parents": "माता-पिता",
+    "spouse": "जीवनसाथी",
+    "children": "बच्चे",
+    "save": "सहेजें",
+    "addRelative": "रिश्तेदार जोड़ें",
+    "whoIsRelative": "आप {name} के लिए किसे जोड़ना चाहेंगे?",
+    "addfather": "पिता जोड़ें",
+    "addmother": "माता जोड़ें",
+    "addspouse": "जीवनसाथी जोड़ें",
+    "addchild": "बच्चा जोड़ें",
+    "child": "बच्चा",
+    "familyMembers": "परिवार के सदस्य",
+    "search": "परिवार में खोजें",
+    "editPerson": "संपादित करें",
+    "deleteTitle": "व्यक्ति को हटाएं?",
+    "deleteDesc": "यह इस व्यक्ति को फैमिली ट्री से हटा देगा और उनके संग्रहीत रिश्तों को हटा देगा।"
   }
 }

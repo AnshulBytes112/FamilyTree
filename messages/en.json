@@ -2,7 +2,8 @@
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong. Please try again.",
-    "back": "Back"
+    "back": "Back",
+    "edit": "Edit"
   },
   "landing": {
     "nav": {
@@ -71,7 +72,8 @@
       "members": "Members",
       "generations": "Generations",
       "branches": "Branches",
-      "photos": "Photos"
+      "photos": "Photos",
+      "contributors": "Contributors"
     },
     "recentMembers": {
       "title": "Recently Added Members",
@@ -104,5 +106,50 @@
       "joined": "Joined",
       "pending": "Pending"
     }
+  },
+  "people": {
+    "personAdded": "Person Added",
+    "personAddedDesc": "{name} has been added to your family.",
+    "whatNext": "What would you like to do next?",
+    "addRelationshipsBtn": "Add Relationships",
+    "addAnotherPersonBtn": "Add Another Person",
+    "viewPersonBtn": "View Person",
+    "addFamilyMember": "Add Family Member",
+    "whoToAdd": "Who would you like to add?",
+    "nameLabel": "Name",
+    "namePlaceholder": "Full name",
+    "genderLabel": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "genderUnknown": "Prefer not to specify",
+    "dobLabel": "Date of birth",
+    "dodLabel": "Date of death",
+    "pobLabel": "Place of birth",
+    "porLabel": "Place of residence",
+    "notesLabel": "Notes",
+    "optional": "Optional",
+    "addPersonBtn": "Add Person",
+    "directory": "People",
+    "familyMember": "Family Member",
+    "family": "Family",
+    "father": "Father",
+    "mother": "Mother",
+    "parents": "Parents",
+    "spouse": "Spouse",
+    "children": "Children",
+    "save": "Save",
+    "addRelative": "Add Relative",
+    "whoIsRelative": "Who would you like to add for {name}?",
+    "addfather": "Add Father",
+    "addmother": "Add Mother",
+    "addspouse": "Add Spouse",
+    "addchild": "Add Child",
+    "child": "Child",
+    "familyMembers": "family members",
+    "search": "Search family",
+    "editPerson": "Edit Person",
+    "deleteTitle": "Delete Person?",
+    "deleteDesc": "This will remove this person from the family tree and remove their stored relationships."
   }
 }
