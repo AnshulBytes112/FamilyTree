@@ -150,6 +150,13 @@
     "search": "Search family",
     "editPerson": "Edit Person",
     "deleteTitle": "Delete Person?",
-    "deleteDesc": "This will remove this person from the family tree and remove their stored relationships."
+    "deleteDesc": "This will remove this person from the family tree and remove their stored relationships.",
+    "viewInTree": "View in Family Tree",
+    "familyTree": "Family Tree",
+    "emptyTreeTitle": "Your family tree is waiting for its first member.",
+    "emptyTreeDesc": "Start by adding someone to your family.",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "fitView": "Fit View"
   }
 }

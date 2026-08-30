@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { getPersonWithRelationships } from '@/app/family/[familyId]/people/actions';
-import { ChevronLeft, Edit, Plus } from 'lucide-react';
+import { ChevronLeft, Edit, Plus, Network } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -66,7 +66,13 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
               </p>
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 justify-end">
+              <Link 
+                href={`/family/${familyId}/tree?person=${personId}`} 
+                className={cn(buttonVariants({ variant: "outline" }), "text-slate-700")}
+              >
+                <Network size={16} className="mr-2" /> {t('people.viewInTree', { defaultMessage: 'View in Family Tree' })}
+              </Link>
               <AddRelativeDialog familyId={familyId} personId={personId} personName={person.name} />
               <Link 
                 href={`/family/${familyId}/people/${personId}/edit`} 

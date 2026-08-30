@@ -27,7 +27,7 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
   const [step, setStep] = useState<'type' | 'select' | 'new'>('type');
   const [relType, setRelType] = useState<'father' | 'mother' | 'spouse' | 'child' | null>(null);
   
-  const [people, setPeople] = useState<any[]>([]);
+  const [people, setPeople] = useState<{ id: string, name: string }[]>([]);
   const [loadingPeople, setLoadingPeople] = useState(false);
 
   // Fetch people when dialog opens
@@ -56,7 +56,7 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
   };
 
   // Form action for existing person
-  const handleExisting = async (prevState: any, formData: FormData) => {
+  const handleExisting = async (prevState: unknown, formData: FormData) => {
     const selectedId = formData.get('existingPersonId') as string;
     if (!selectedId || selectedId === 'none') return { error: 'Please select a person' };
     
@@ -70,14 +70,14 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
       }
       resetState(false);
       return { success: true };
-    } catch (err: any) {
-      return { error: err.message };
+    } catch (err: unknown) {
+      return { error: err instanceof Error ? err.message : String(err) };
     }
   };
   const [existingState, existingAction, existingPending] = useActionState(handleExisting, null);
 
   // Form action for new person
-  const handleNew = async (prevState: any, formData: FormData) => {
+  const handleNew = async (prevState: unknown, formData: FormData) => {
     try {
       // 1. Create Person
       const personRes = await createPerson(familyId, formData);
@@ -95,8 +95,8 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
       }
       resetState(false);
       return { success: true };
-    } catch (err: any) {
-      return { error: err.message };
+    } catch (err: unknown) {
+      return { error: err instanceof Error ? err.message : String(err) };
     }
   };
   const [newState, newAction, newPending] = useActionState(handleNew, null);

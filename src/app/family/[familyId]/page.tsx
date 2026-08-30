@@ -96,10 +96,10 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
             <Users size={18} />
             {t('nav.people')}
           </Link>
-          <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 font-medium text-sm cursor-not-allowed">
+          <Link href={`/family/${resolvedParams.familyId}/tree`} className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors">
             <Network size={18} />
-            {t('nav.familyTree')} <span className="text-[10px] ml-auto bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Soon</span>
-          </div>
+            {t('nav.familyTree')}
+          </Link>
           <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 font-medium text-sm cursor-not-allowed">
             <Search size={18} />
             {t('nav.relationshipFinder')} <span className="text-[10px] ml-auto bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Soon</span>
@@ -124,12 +124,20 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-1">{t('header.title')}</h1>
             <p className="text-slate-500 font-medium">{t('header.welcome', { name: user.name })}</p>
           </div>
-          <Link 
-            href={`/family/${resolvedParams.familyId}/people/new`} 
-            className={cn(buttonVariants({ size: "default" }), "bg-emerald-700 hover:bg-emerald-800 text-white rounded-md")}
-          >
-            <Plus size={16} className="mr-2" /> {t('header.addPerson')}
-          </Link>
+          <div className="flex gap-2">
+            <Link 
+              href={`/family/${resolvedParams.familyId}/tree`} 
+              className={cn(buttonVariants({ variant: "outline", size: "default" }), "text-slate-700 bg-white rounded-md hidden sm:flex")}
+            >
+              <Network size={16} className="mr-2" /> {t('nav.familyTree', { defaultMessage: 'Family Tree' })}
+            </Link>
+            <Link 
+              href={`/family/${resolvedParams.familyId}/people/new`} 
+              className={cn(buttonVariants({ size: "default" }), "bg-emerald-700 hover:bg-emerald-800 text-white rounded-md")}
+            >
+              <Plus size={16} className="mr-2" /> {t('header.addPerson')}
+            </Link>
+          </div>
         </header>
 
         {/* Stats Grid */}
