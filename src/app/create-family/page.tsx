@@ -21,7 +21,7 @@ export default function CreateFamilyPage() {
 
   useEffect(() => {
     if (state?.success && state?.familyId) {
-      router.push(`/family/${state.familyId}/invite`);
+      router.push(`/family/${state.familyId}/people/new?welcome=true`);
     }
   }, [state, router]);
 

@@ -71,9 +71,9 @@ export function PersonListRow({ person, familyId, relationship }: PersonListRowP
         )}
       </div>
 
-      <div className="flex items-center gap-3 text-right">
+      <div className="flex items-center gap-2 sm:gap-3 text-right shrink-0">
         {relationship && (
-          <span className="text-[15px] font-medium text-slate-700">{relationship}</span>
+          <span className="hidden sm:inline text-[15px] font-medium text-slate-700">{relationship}</span>
         )}
         <ChevronRight size={18} className="text-slate-400" />
       </div>

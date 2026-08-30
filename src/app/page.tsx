@@ -4,8 +4,25 @@ import { Trees, Users, ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { createAdminClient } from '@/lib/supabase';
 
 export default async function LandingPage() {
+  // Auto-redirect logged in users to their family dashboard
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get('ourfamily_session')?.value;
+  if (sessionToken) {
+    const supabase = createAdminClient();
+    const { data: session } = await supabase.from('sessions').select('user_id').eq('session_token', sessionToken).single();
+    if (session) {
+      const { data: membership } = await supabase.from('family_memberships').select('family_id').eq('user_id', session.user_id).limit(1).single();
+      if (membership) {
+        redirect(`/family/${membership.family_id}`);
+      }
+    }
+  }
+
   const t = await getTranslations('landing');
 
   return (

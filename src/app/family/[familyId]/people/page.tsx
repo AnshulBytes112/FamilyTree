@@ -62,7 +62,7 @@ export default async function PeopleDirectoryPage({
                 {t('directory', { defaultMessage: 'People Directory' })}
               </h1>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
                 {/* Search */}
                 <form action={`/family/${familyId}/people`} method="GET" className="relative flex-1 sm:w-64">
                   {filter !== 'all' && <input type="hidden" name="filter" value={filter} />}
@@ -81,10 +81,10 @@ export default async function PeopleDirectoryPage({
                 {/* Add Person */}
                 <Link 
                   href={`/family/${familyId}/people/new`}
-                  className={cn(buttonVariants({ size: "default" }), "bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg h-11 px-3 sm:px-4 shrink-0")}
+                  className={cn(buttonVariants({ size: "default" }), "bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg h-11 px-3 sm:px-4 shrink-0 flex items-center justify-center")}
                 >
-                  <Plus size={18} className="sm:mr-2" />
-                  <span className="hidden sm:inline">{t('addPersonBtn', { defaultMessage: 'Add Person' })}</span>
+                  <Plus size={18} className="mr-2 sm:mr-2" />
+                  <span>{t('addPersonBtn', { defaultMessage: 'Add Person' })}</span>
                 </Link>
               </div>
             </div>
