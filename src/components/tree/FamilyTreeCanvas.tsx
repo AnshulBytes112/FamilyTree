@@ -13,13 +13,11 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { buildTree } from '@/lib/family-tree/tree-builder';
-import { getLayoutedElements } from '@/lib/family-tree/layout-tree';
 import { RawPerson, RawRelationship, FamilyTreeNode, FamilyTreeEdge } from '@/lib/family-tree/tree-types';
 import { PersonNode } from './PersonNode';
 import { UnionNode } from './UnionNode';
 import { PersonSidePanel } from './PersonSidePanel';
-import { Search, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
+import { Search, ZoomIn, ZoomOut, Maximize, Home } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const nodeTypes = {
@@ -28,11 +26,15 @@ const nodeTypes = {
 };
 
 function FlowCanvas({ 
+  initialNodes,
+  initialEdges,
   people, 
   relationships, 
   familyId,
   initialPersonId
 }: { 
+  initialNodes: FamilyTreeNode[],
+  initialEdges: FamilyTreeEdge[],
   people: RawPerson[], 
   relationships: RawRelationship[], 
   familyId: string,
@@ -42,8 +44,8 @@ function FlowCanvas({
   const router = useRouter();
   const { fitView, zoomIn, zoomOut, setCenter } = useReactFlow();
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<FamilyTreeNode>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<FamilyTreeEdge>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<FamilyTreeNode>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<FamilyTreeEdge>(initialEdges);
   
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(initialPersonId || null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,19 +77,14 @@ function FlowCanvas({
     }
   }, [setCenter]);
 
-  // Compute Layout ONCE when data changes
+  // Initial View Setup
   useEffect(() => {
     if (people.length === 0) return;
-    const { nodes: rawNodes, edges: rawEdges } = buildTree(people, relationships);
-    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(rawNodes, rawEdges);
-    
-    setNodes(layoutedNodes);
-    setEdges(layoutedEdges);
     
     // Slight delay to allow ReactFlow to render before fitting view
     setTimeout(() => {
       if (initialPersonId) {
-        const node = layoutedNodes.find(n => n.id === initialPersonId);
+        const node = initialNodes.find(n => n.id === initialPersonId);
         if (node) {
           setSelectedPersonId(initialPersonId);
           setCenter(node.position.x + 110, node.position.y + 40, { zoom: 1.2, duration: 800 });
@@ -97,7 +94,7 @@ function FlowCanvas({
       }
     }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [people, relationships, initialPersonId]);
+  }, [initialNodes, initialPersonId]);
 
   // Update Highlight/Selected state
   useEffect(() => {
@@ -159,7 +156,7 @@ function FlowCanvas({
   }
 
   return (
-    <div className="flex-1 relative bg-[#fafafa]">
+    <div className="w-full h-full relative bg-[#fafafa]">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -176,14 +173,14 @@ function FlowCanvas({
       >
         <Background color="#cbd5e1" gap={20} />
         
-        {/* Top Header Panel */}
-        <Panel position="top-left" className="m-4 md:m-6 w-[calc(100%-2rem)] md:w-96 flex flex-col gap-2 z-40">
-          <div className="bg-white rounded-xl shadow-md border border-slate-200 p-2 flex items-center">
-            <Search className="text-slate-400 ml-2" size={20} />
+        {/* Top Right Panel for Search */}
+        <Panel position="top-right" className="m-4 md:m-6 w-[calc(100%-2rem)] md:w-80 flex flex-col gap-2 z-40">
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-1.5 flex items-center">
+            <Search className="text-slate-400 ml-2" size={18} />
             <input 
               type="text" 
-              placeholder={t('people.search', { defaultMessage: 'Search person...' })} 
-              className="flex-1 bg-transparent border-none outline-none px-3 text-sm h-10"
+              placeholder="Search person..."
+              className="flex-1 bg-transparent border-none outline-none px-3 text-sm h-9"
               value={searchQuery}
               onChange={handleSearch}
             />
@@ -210,17 +207,25 @@ function FlowCanvas({
           )}
         </Panel>
 
-        {/* Custom Controls (bottom left to match reference or standard react flow controls) */}
-        <Panel position="bottom-left" className="m-4 md:m-6 flex flex-col gap-2 shadow-md rounded-lg overflow-hidden border border-slate-200">
-          <button onClick={() => zoomIn({ duration: 300 })} className="w-10 h-10 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 border-b border-slate-100" title={t('people.zoomIn', { defaultMessage: 'Zoom In' })}>
-            <ZoomIn size={18} />
+        {/* Left Controls Panel */}
+        <Panel position="middle-left" className="m-4 md:m-6 flex flex-col gap-1.5 z-40">
+          <button onClick={() => {
+            if (initialPersonId) focusPerson(initialPersonId, nodes);
+            else fitView({ padding: 0.2, duration: 800 });
+          }} className="w-10 h-10 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 shadow-sm border border-slate-200 rounded-lg mb-2" title="Home">
+            <Home size={18} />
           </button>
-          <button onClick={() => zoomOut({ duration: 300 })} className="w-10 h-10 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 border-b border-slate-100" title={t('people.zoomOut', { defaultMessage: 'Zoom Out' })}>
-            <ZoomOut size={18} />
-          </button>
-          <button onClick={() => fitView({ padding: 0.2, duration: 800 })} className="w-10 h-10 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600" title={t('people.fitView', { defaultMessage: 'Fit View' })}>
-            <Maximize size={18} />
-          </button>
+          <div className="flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg overflow-hidden">
+            <button onClick={() => zoomIn({ duration: 300 })} className="w-10 h-10 hover:bg-slate-50 flex items-center justify-center text-slate-700 border-b border-slate-100" title="Zoom In">
+              <ZoomIn size={18} />
+            </button>
+            <button onClick={() => zoomOut({ duration: 300 })} className="w-10 h-10 hover:bg-slate-50 flex items-center justify-center text-slate-700 border-b border-slate-100" title="Zoom Out">
+              <ZoomOut size={18} />
+            </button>
+            <button onClick={() => fitView({ padding: 0.2, duration: 800 })} className="w-10 h-10 hover:bg-slate-50 flex items-center justify-center text-slate-700" title="Fit View">
+              <Maximize size={18} />
+            </button>
+          </div>
         </Panel>
 
       </ReactFlow>
@@ -240,6 +245,8 @@ function FlowCanvas({
 }
 
 export function FamilyTreeCanvas(props: {
+  initialNodes: FamilyTreeNode[],
+  initialEdges: FamilyTreeEdge[],
   people: RawPerson[], 
   relationships: RawRelationship[], 
   familyId: string,

@@ -25,7 +25,7 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
   
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<'type' | 'select' | 'new'>('type');
-  const [relType, setRelType] = useState<'father' | 'mother' | 'spouse' | 'child' | null>(null);
+  const [relType, setRelType] = useState<'father' | 'mother' | 'spouse' | 'son' | 'daughter' | 'brother' | 'sister' | null>(null);
   
   const [people, setPeople] = useState<{ id: string, name: string }[]>([]);
   const [loadingPeople, setLoadingPeople] = useState(false);
@@ -64,10 +64,14 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
     try {
       if (relType === 'father' || relType === 'mother') {
         await createParentRelationship(familyId, personId, selectedId);
-      } else if (relType === 'child') {
+      } else if (relType === 'son' || relType === 'daughter') {
         await createParentRelationship(familyId, selectedId, personId); // personId is the parent
       } else if (relType === 'spouse') {
         await createSpouseRelationship(familyId, personId, selectedId);
+      } else if (relType === 'brother' || relType === 'sister') {
+        // @ts-ignore createSiblingRelationship imported below or added
+        const { createSiblingRelationship } = await import('@/app/family/[familyId]/people/actions');
+        await createSiblingRelationship(familyId, personId, selectedId);
       }
       resetState(false);
       return { success: true };
@@ -89,10 +93,14 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
       // 2. Connect
       if (relType === 'father' || relType === 'mother') {
         await createParentRelationship(familyId, personId, newId);
-      } else if (relType === 'child') {
+      } else if (relType === 'son' || relType === 'daughter') {
         await createParentRelationship(familyId, newId, personId); // personId is the parent
       } else if (relType === 'spouse') {
         await createSpouseRelationship(familyId, personId, newId);
+      } else if (relType === 'brother' || relType === 'sister') {
+        // @ts-ignore
+        const { createSiblingRelationship } = await import('@/app/family/[familyId]/people/actions');
+        await createSiblingRelationship(familyId, personId, newId);
       }
       resetState(false);
       return { success: true };
@@ -119,18 +127,27 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
                 {t('whoIsRelative', { name: personName, defaultMessage: `Who would you like to add for ${personName}?` })}
               </DialogDescription>
             </DialogHeader>
-            <div className="grid grid-cols-2 gap-4 py-4">
-              <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => selectType('father')}>
+            <div className="grid grid-cols-2 gap-3 py-4">
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('father'); setStep('select'); }}>
                 <span className="font-semibold">{t('father', { defaultMessage: 'Father' })}</span>
               </Button>
-              <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => selectType('mother')}>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('mother'); setStep('select'); }}>
                 <span className="font-semibold">{t('mother', { defaultMessage: 'Mother' })}</span>
               </Button>
-              <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => selectType('spouse')}>
-                <span className="font-semibold">{t('spouse', { defaultMessage: 'Spouse' })}</span>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('son'); setStep('select'); }}>
+                <span className="font-semibold">{t('son', { defaultMessage: 'Son' })}</span>
               </Button>
-              <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => selectType('child')}>
-                <span className="font-semibold">{t('child', { defaultMessage: 'Child' })}</span>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('daughter'); setStep('select'); }}>
+                <span className="font-semibold">{t('daughter', { defaultMessage: 'Daughter' })}</span>
+              </Button>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('brother'); setStep('select'); }}>
+                <span className="font-semibold">{t('brother', { defaultMessage: 'Brother' })}</span>
+              </Button>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200" onClick={() => { setRelType('sister'); setStep('select'); }}>
+                <span className="font-semibold">{t('sister', { defaultMessage: 'Sister' })}</span>
+              </Button>
+              <Button variant="outline" className="h-14 flex flex-col items-center justify-center gap-1 border-slate-200 col-span-2" onClick={() => { setRelType('spouse'); setStep('select'); }}>
+                <span className="font-semibold">{t('spouse', { defaultMessage: 'Spouse' })}</span>
               </Button>
             </div>
           </>
@@ -190,7 +207,10 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
               </div>
               <div className="space-y-2">
                 <Label htmlFor="gender">Gender</Label>
-                <Select name="gender" defaultValue={relType === 'father' ? 'MALE' : relType === 'mother' ? 'FEMALE' : 'UNKNOWN'}>
+                <Select name="gender" defaultValue={
+                  relType === 'father' || relType === 'son' || relType === 'brother' ? 'MALE' : 
+                  relType === 'mother' || relType === 'daughter' || relType === 'sister' ? 'FEMALE' : 'UNKNOWN'
+                }>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>

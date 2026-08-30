@@ -252,6 +252,76 @@ export async function removeRelationship(familyId: string, relationshipId: strin
   }
 }
 
+export async function createSiblingRelationship(familyId: string, personId: string, siblingId: string) {
+  try {
+    const { userId, supabase } = await requireFamilyMember(familyId);
+    
+    z.string().uuid().parse(personId);
+    z.string().uuid().parse(siblingId);
+    if (personId === siblingId) throw new Error("Cannot be a sibling of themselves");
+
+    // 1. Find existing parents of personId
+    const { data: parents } = await supabase
+      .from('relationships')
+      .select('related_person_id')
+      .eq('family_id', familyId)
+      .eq('person_id', personId)
+      .eq('type', 'PARENT');
+
+    let parentIds = (parents || []).map(p => p.related_person_id);
+
+    // 2. If no parents exist, create an "Unknown Parent"
+    if (parentIds.length === 0) {
+      const { data: unknownParent, error: upError } = await supabase
+        .from('people')
+        .insert({
+          family_id: familyId,
+          name: 'Unknown Parent',
+          gender: 'UNKNOWN',
+          created_by: userId
+        })
+        .select('id')
+        .single();
+        
+      if (upError) throw upError;
+      
+      parentIds = [unknownParent.id];
+
+      // Link original person to this unknown parent
+      await supabase
+        .from('relationships')
+        .insert({
+          family_id: familyId,
+          person_id: personId,
+          related_person_id: unknownParent.id,
+          type: 'PARENT',
+          created_by: userId
+        });
+    }
+
+    // 3. Link sibling to all identified parents
+    const siblingRelationships = parentIds.map(parentId => ({
+      family_id: familyId,
+      person_id: siblingId,
+      related_person_id: parentId,
+      type: 'PARENT',
+      created_by: userId
+    }));
+
+    const { error: relError } = await supabase
+      .from('relationships')
+      .upsert(siblingRelationships, { onConflict: 'family_id,person_id,related_person_id,type' });
+
+    if (relError) throw relError;
+
+    revalidatePath(`/family/${familyId}`);
+    return { success: true };
+  } catch (error: any) {
+    console.error('createSiblingRelationship error:', error);
+    return { success: false, error: error.message || 'Failed to create sibling relationship' };
+  }
+}
+
 // --- QUERIES (Designed to be called from Server Components, but could be exposed as actions if needed) ---
 export async function searchPeople(familyId: string, query: string) {
   const { supabase } = await requireFamilyMember(familyId);

@@ -23,26 +23,26 @@ export function AppSidebar({ familyId }: { familyId: string }) {
   }, [pathname]);
 
   const navItems = [
-    { name: t('dashboard', { defaultMessage: 'Dashboard' }), href: `/family/${familyId}`, icon: LayoutDashboard },
-    { name: t('familyTree', { defaultMessage: 'Family Tree' }), href: `/family/${familyId}/tree`, icon: Network },
-    { name: t('people', { defaultMessage: 'People' }), href: `/family/${familyId}/people`, icon: Users },
-    { name: 'Branches', href: `/family/${familyId}/branches`, icon: GitBranch, disabled: false },
-    { name: 'Relationship Finder', href: `/family/${familyId}/relationships`, icon: Search, disabled: false },
-    { name: 'Photos', href: `/family/${familyId}/photos`, icon: ImageIcon, disabled: true },
+    { name: t('dashboard'), href: `/family/${familyId}`, icon: LayoutDashboard },
+    { name: t('familyTree'), href: `/family/${familyId}/tree`, icon: Network },
+    { name: t('people'), href: `/family/${familyId}/people`, icon: Users },
+    { name: t('branches'), href: `/family/${familyId}/branches`, icon: GitBranch },
+    { name: t('relationshipFinder'), href: `/family/${familyId}/relationships`, icon: Search },
+    { name: t('photos'), href: `/family/${familyId}/photos`, icon: ImageIcon, disabled: true },
     { name: 'Events', href: `/family/${familyId}/events`, icon: Calendar, disabled: true },
     { name: t('settings', { defaultMessage: 'Settings' }), href: `/family/${familyId}/settings`, icon: Settings, disabled: true },
   ];
 
   const sidebarContent = (
     <>
-      <div className="h-16 flex items-center px-6 border-b border-slate-100 shrink-0">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-slate-900">
-          <div className="text-emerald-700"><Trees size={22} /></div>
+      <div className="h-[72px] flex items-center px-6 border-b border-slate-100 shrink-0">
+        <Link href="/" className="flex items-center gap-2 font-[family-name:var(--font-playfair)] font-bold text-xl text-slate-900 tracking-tight">
+          <span className="text-2xl leading-none" role="img" aria-label="tree">🌳</span>
           <span>Our Family</span>
         </Link>
       </div>
       
-      <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 py-4 px-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           // Exact match for dashboard, prefix match for others
           const isActive = item.href === `/family/${familyId}` 
@@ -66,18 +66,18 @@ export function AppSidebar({ familyId }: { familyId: string }) {
               href={item.href} 
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium text-sm transition-colors ${
                 isActive 
-                  ? 'bg-emerald-700 text-white shadow-sm' 
+                  ? 'bg-[#1E763A] text-white shadow-sm' 
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
-              <Icon size={18} />
+              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : 'text-slate-500'} />
               {item.name}
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-100 shrink-0">
+      <div className="p-4 shrink-0">
         <LanguageSwitcher />
       </div>
     </>

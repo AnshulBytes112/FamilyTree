@@ -51,7 +51,7 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
         id: `e-${p1}-${unionId}`,
         source: p1,
         target: unionId,
-        type: 'smoothstep', // Custom or standard
+        type: 'step',
         animated: false,
         style: { stroke: '#94a3b8', strokeWidth: 1.5 },
       });
@@ -59,7 +59,7 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
         id: `e-${p2}-${unionId}`,
         source: p2,
         target: unionId,
-        type: 'smoothstep',
+        type: 'step',
         animated: false,
         style: { stroke: '#94a3b8', strokeWidth: 1.5 },
       });
@@ -99,8 +99,8 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
           id: `e-${unionId}-${childId}`,
           source: unionId,
           target: childId,
-          type: 'smoothstep',
-          style: { stroke: '#64748b', strokeWidth: 1.5 },
+          type: 'step',
+          style: { stroke: '#94a3b8', strokeWidth: 1.5, strokeDasharray: '4 4' },
         });
         edgeCreated = true;
       }
@@ -113,8 +113,8 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
           id: `e-${parentId}-${childId}`,
           source: parentId,
           target: childId,
-          type: 'smoothstep',
-          style: { stroke: '#64748b', strokeWidth: 1.5 },
+          type: 'step',
+          style: { stroke: '#94a3b8', strokeWidth: 1.5, strokeDasharray: '4 4' },
         });
       });
     }

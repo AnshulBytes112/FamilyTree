@@ -3,6 +3,8 @@ import { FamilyTreeCanvas } from '@/components/tree/FamilyTreeCanvas';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { buildTree } from '@/lib/family-tree/tree-builder';
+import { getLayoutedElements } from '@/lib/family-tree/layout-tree';
 
 export default async function FamilyTreePage({ 
   params,
@@ -42,16 +44,17 @@ export default async function FamilyTreePage({
     validPersonId = initialPersonId;
   }
 
+  // Compute Layout ON THE SERVER (Heavy lifting)
+  const { nodes: rawNodes, edges: rawEdges } = buildTree(people || [], relationships || []);
+  const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(rawNodes, rawEdges);
+
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden bg-white">
       {/* Header */}
-      <div className="h-16 border-b border-slate-200 px-4 md:px-6 flex items-center justify-between shrink-0 bg-white z-10 relative">
+      <div className="h-20 px-6 md:px-10 flex flex-col md:flex-row md:items-center justify-between shrink-0 bg-[#fafafa] z-10 relative pt-4 md:pt-0">
         <div className="flex items-center gap-4">
-          <Link href={`/family/${familyId}`} className="p-2 -ml-2 text-slate-500 hover:text-slate-900 transition-colors">
-            <ChevronLeft size={20} />
-          </Link>
           <div>
-            <h1 className="font-bold text-slate-900 leading-tight">{t('familyTree', { defaultMessage: 'Family Tree' })}</h1>
+            <h1 className="text-[28px] font-[family-name:var(--font-playfair)] font-bold text-slate-900 tracking-tight">{t('familyTree', { defaultMessage: 'Family Tree' })}</h1>
           </div>
         </div>
       </div>
@@ -59,6 +62,8 @@ export default async function FamilyTreePage({
       {/* Canvas Area */}
       <div className="flex-1 relative">
         <FamilyTreeCanvas 
+          initialNodes={layoutedNodes}
+          initialEdges={layoutedEdges}
           people={people || []} 
           relationships={relationships || []} 
           familyId={familyId} 
