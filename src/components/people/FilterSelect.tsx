@@ -4,13 +4,18 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Filter } from 'lucide-react';
 
-export function FilterSelect({ familyId, currentQuery, currentFilter }: { familyId: string, currentQuery: string, currentFilter: string }) {
+export function FilterSelect({ familyId, currentQuery, currentFilter, basePath }: { familyId: string, currentQuery?: string, currentFilter: string, basePath?: string }) {
   const t = useTranslations('people');
   const router = useRouter();
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
-    router.push(`/family/${familyId}/people?q=${currentQuery}&filter=${val}`);
+    const path = basePath || `/family/${familyId}/people`;
+    const params = new URLSearchParams();
+    if (currentQuery) params.set('q', currentQuery);
+    if (val && val !== 'all') params.set('filter', val);
+    
+    router.push(`${path}?${params.toString()}`);
   };
 
   return (

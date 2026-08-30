@@ -46,11 +46,11 @@ export default function AddPersonPage() {
             <CheckCircle2 size={32} />
           </div>
           <h1 className="text-2xl font-bold text-slate-900 mb-2">
-            {isWelcome ? "Profile Created!" : t('people.personAdded', { defaultMessage: 'Person Added' })}
+            {isWelcome ? t('joinFamily.profileCreated') : t('people.personAdded', { defaultMessage: 'Person Added' })}
           </h1>
           <p className="text-slate-500 mb-10">
             {isWelcome 
-              ? `${createdName}, your profile has been successfully added to the family tree.`
+              ? t('joinFamily.profileCreatedDesc', { name: createdName, defaultMessage: `${createdName}, your profile has been successfully added to the family tree.` })
               : t('people.personAddedDesc', { name: createdName, defaultMessage: `${createdName} has been added to your family.` })}
           </p>
           
@@ -99,11 +99,11 @@ export default function AddPersonPage() {
         <div className="p-6 md:p-8">
           <div className="mb-8">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-1">
-              {isWelcome ? "Create Your Profile" : t('people.addFamilyMember', { defaultMessage: 'Add Family Member' })}
+              {isWelcome ? t('joinFamily.createProfile') : t('people.addFamilyMember', { defaultMessage: 'Add Family Member' })}
             </h1>
             <p className="text-slate-500 text-sm">
               {isWelcome 
-                ? "Welcome to the family! Please add your details to the family tree."
+                ? t('joinFamily.welcomeToFamily')
                 : t('people.whoToAdd', { defaultMessage: 'Who would you like to add?' })}
             </p>
           </div>
@@ -229,7 +229,7 @@ export default function AddPersonPage() {
                 {isPending ? (
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 ) : null}
-                {isWelcome ? "Create Profile" : t('people.addPersonBtn', { defaultMessage: 'Add Person' })}
+                {isWelcome ? t('joinFamily.createProfile') : t('people.addPersonBtn', { defaultMessage: 'Add Person' })}
               </button>
             </div>
           </form>

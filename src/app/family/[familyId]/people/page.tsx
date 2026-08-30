@@ -1,5 +1,6 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
 import { getFamilyPeople, searchPeople } from '@/app/family/[familyId]/people/actions';
+import { translateArray } from '@/lib/translate';
 import { Search, Filter, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { FilterSelect } from '@/components/people/FilterSelect';
@@ -43,6 +44,9 @@ export default async function PeopleDirectoryPage({
   } else if (filter === 'unknown') {
     filteredPeople = people.filter(p => p.gender === 'UNKNOWN' || p.gender === 'OTHER');
   }
+
+  const locale = await getLocale();
+  const translatedPeople = await translateArray(filteredPeople, ['name'], locale);
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#fafafa] p-4 sm:p-6 lg:p-8">
@@ -112,7 +116,7 @@ export default async function PeopleDirectoryPage({
               </div>
             ) : (
               <div>
-                {filteredPeople.map((person) => (
+                {translatedPeople.map((person) => (
                   <PersonListRow 
                     key={person.id} 
                     person={person} 

@@ -36,7 +36,7 @@ export default function AutoJoinFamilyPage({ params }: { params: Promise<{ code:
           <div>
             <CardTitle className="text-2xl font-bold">{t('joinFamily.title')}</CardTitle>
             <CardDescription className="text-base mt-2">
-              You've been invited to join a family tree. Enter your name to continue.
+              {t('joinFamily.autoJoinDesc')}
             </CardDescription>
           </div>
         </CardHeader>

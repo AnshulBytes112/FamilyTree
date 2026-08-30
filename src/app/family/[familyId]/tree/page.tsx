@@ -1,6 +1,7 @@
 import { requireFamilyMember } from '@/app/family/[familyId]/people/actions';
 import { FamilyTreeCanvas } from '@/components/tree/FamilyTreeCanvas';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { translateArray } from '@/lib/translate';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { buildTree } from '@/lib/family-tree/tree-builder';
@@ -44,8 +45,12 @@ export default async function FamilyTreePage({
     validPersonId = initialPersonId;
   }
 
+  // Translate data
+  const locale = await getLocale();
+  const translatedPeople = await translateArray(people || [], ['name', 'place_of_birth', 'place_of_residence'], locale);
+
   // Compute Layout ON THE SERVER (Heavy lifting)
-  const { nodes: rawNodes, edges: rawEdges } = buildTree(people || [], relationships || []);
+  const { nodes: rawNodes, edges: rawEdges } = buildTree(translatedPeople, relationships || []);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(rawNodes, rawEdges);
 
   return (
@@ -64,7 +69,7 @@ export default async function FamilyTreePage({
         <FamilyTreeCanvas 
           initialNodes={layoutedNodes}
           initialEdges={layoutedEdges}
-          people={people || []} 
+          people={translatedPeople} 
           relationships={relationships || []} 
           familyId={familyId} 
           initialPersonId={validPersonId} 

@@ -20,8 +20,9 @@ export function InviteClientLayout({ inviteCode, members, familyName }: InviteCl
 
   useEffect(() => {
     if (inviteCode) {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setInviteUrl(`${window.location.origin}/join/${inviteCode}`);
+      setInviteUrl(`${baseUrl}/join/${inviteCode}`);
     }
   }, [inviteCode]);
 

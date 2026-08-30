@@ -1,5 +1,6 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
 import { getPersonWithRelationships } from '@/app/family/[familyId]/people/actions';
+import { translateText, translateArray } from '@/lib/translate';
 import { ChevronLeft, Edit, Plus, Network } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
@@ -12,11 +13,33 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
   const t = await getTranslations();
   
   const { person, parents, children, spouses } = await getPersonWithRelationships(familyId, personId);
+  const locale = await getLocale();
+
+  // Translate main person details
+  if (locale !== 'en') {
+    person.name = await translateText(person.name, locale);
+    person.place_of_birth = await translateText(person.place_of_birth, locale);
+    person.place_of_residence = await translateText(person.place_of_residence, locale);
+    person.notes = await translateText(person.notes, locale);
+  }
+
+  // Helper to translate relationships
+  const translateRelations = async (rels: any[], relKey: string) => {
+    if (locale === 'en') return rels;
+    return Promise.all(rels.map(async (r) => {
+      const translatedName = await translateText(r[relKey].name, locale);
+      return { ...r, [relKey]: { ...r[relKey], name: translatedName } };
+    }));
+  };
+
+  const translatedParents = await translateRelations(parents, 'related_person');
+  const translatedChildren = await translateRelations(children, 'child_person');
+  const translatedSpouses = await translateRelations(spouses, 'spouse');
 
   // Helper to categorize parents
-  const fathers = (parents as any[]).filter(p => p.related_person.gender === 'MALE');
-  const mothers = (parents as any[]).filter(p => p.related_person.gender === 'FEMALE');
-  const otherParents = (parents as any[]).filter(p => p.related_person.gender !== 'MALE' && p.related_person.gender !== 'FEMALE');
+  const fathers = translatedParents.filter(p => p.related_person.gender === 'MALE');
+  const mothers = translatedParents.filter(p => p.related_person.gender === 'FEMALE');
+  const otherParents = translatedParents.filter(p => p.related_person.gender !== 'MALE' && p.related_person.gender !== 'FEMALE');
 
   const renderPersonList = (list: any[], relationshipField: string, emptyMessage: string) => {
     if (list.length === 0) {
@@ -36,7 +59,7 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
                   {relPerson.name}
                 </Link>
                 {relPerson.date_of_birth && (
-                  <p className="text-xs text-slate-500">Born {new Date(relPerson.date_of_birth).getFullYear()}</p>
+                  <p className="text-xs text-slate-500">{t('generations.born', { defaultMessage: 'Born' })} {new Date(relPerson.date_of_birth).getFullYear()}</p>
                 )}
               </div>
             </li>
@@ -62,7 +85,7 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">{person.name}</h1>
               <p className="text-slate-500 font-medium mt-1">
                 {t('people.familyMember', { defaultMessage: 'Family Member' })} 
-                {person.date_of_birth && ` • Born ${new Date(person.date_of_birth).getFullYear()}`}
+                {person.date_of_birth && ` • ${t('generations.born', { defaultMessage: 'Born' })} ${new Date(person.date_of_birth).getFullYear()}`}
               </p>
             </div>
             
@@ -124,7 +147,7 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
               )}
               {!person.date_of_birth && !person.date_of_death && !person.place_of_birth && !person.place_of_residence && !person.phone && !person.notes && (
                 <div className="sm:col-span-2 text-sm text-slate-500 italic">
-                  No additional details provided.
+                  {t('people.noDetails', { defaultMessage: 'No additional details provided.' })}
                 </div>
               )}
             </dl>
@@ -158,13 +181,13 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
               {/* Spouses */}
               <div className="md:col-span-2 pt-4 border-t border-slate-50">
                 <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{t('people.spouse', { defaultMessage: 'Spouse' })}</h3>
-                {renderPersonList(spouses, 'spouse', '—')}
+                {renderPersonList(translatedSpouses, 'spouse', '—')}
               </div>
 
               {/* Children */}
               <div className="md:col-span-2 pt-4 border-t border-slate-50">
                 <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{t('people.children', { defaultMessage: 'Children' })}</h3>
-                {renderPersonList(children, 'child_person', '—')}
+                {renderPersonList(translatedChildren, 'child_person', '—')}
               </div>
 
             </div>

@@ -50,7 +50,12 @@
     "yourNamePlaceholder": "Enter your name",
     "submitBtn": "Join Family",
     "invalidCode": "Invalid or expired invite code.",
-    "infoBoxText": "Ask your family admin for the invite code to join the family."
+    "infoBoxText": "Ask your family admin for the invite code to join the family.",
+    "profileCreated": "Profile Created!",
+    "profileCreatedDesc": "{name}, your profile has been successfully added to the family tree.",
+    "welcomeToFamily": "Welcome to the family! Please add your details to the family tree.",
+    "autoJoinDesc": "You've been invited to join a family tree. Enter your name to continue.",
+    "createProfile": "Create Profile"
   },
   "dashboard": {
     "nav": {
@@ -181,7 +186,8 @@
     "years": "years",
     "nameImmutable": "Name cannot be changed after creation.",
     "about": "About",
-    "phoneLabel": "Phone number"
+    "phoneLabel": "Phone number",
+    "noDetails": "No additional details provided."
   },
   "branches": {
     "title": "Family Branches",
@@ -201,5 +207,14 @@
     "noMembers": "No members yet",
     "createFirstBranch": "Create your first branch",
     "saveChanges": "Save Changes"
+  },
+  "generations": {
+    "title": "Generations",
+    "subtitle": "Explore your family members organized by their generation.",
+    "noMembers": "No members to display.",
+    "member": "member",
+    "members": "members",
+    "gen": "Gen",
+    "born": "Born"
   }
 }
