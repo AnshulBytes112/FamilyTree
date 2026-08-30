@@ -13,6 +13,7 @@ import { Loader2, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, use } from 'react';
 import Link from 'next/link';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 export default function AutoJoinFamilyPage({ params }: { params: Promise<{ code: string }> }) {
   const resolvedParams = use(params);
@@ -27,7 +28,10 @@ export default function AutoJoinFamilyPage({ params }: { params: Promise<{ code:
   }, [state, router]);
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 flex flex-col items-center justify-center p-4 relative">
+      <div className="absolute top-4 right-4 z-10">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md shadow-lg border-0">
         <CardHeader className="text-center space-y-4 pb-6">
           <div className="mx-auto bg-emerald-100 p-4 rounded-full w-20 h-20 flex items-center justify-center">

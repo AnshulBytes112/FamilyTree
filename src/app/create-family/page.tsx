@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 export default function CreateFamilyPage() {
   const t = useTranslations();
@@ -28,9 +29,12 @@ export default function CreateFamilyPage() {
     <div className="flex-1 flex flex-col min-h-screen bg-white">
       <div className="max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 pt-8">
         
-        <Link href="/" className="inline-flex items-center text-sm font-semibold text-slate-700 hover:text-slate-900 mb-8 transition-colors">
-          <ChevronLeft size={16} className="mr-1" /> {t('common.back')}
-        </Link>
+        <div className="flex items-center justify-between mb-8">
+          <Link href="/" className="inline-flex items-center text-sm font-semibold text-slate-700 hover:text-slate-900 transition-colors">
+            <ChevronLeft size={16} className="mr-1" /> {t('common.back')}
+          </Link>
+          <LanguageSwitcher />
+        </div>
 
         <div className="mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">{t('createFamily.title')}</h1>

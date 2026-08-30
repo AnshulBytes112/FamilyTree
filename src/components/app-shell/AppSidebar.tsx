@@ -93,9 +93,12 @@ export function AppSidebar({ familyId }: { familyId: string }) {
           <div className="text-emerald-700"><Trees size={20} /></div>
           <span>Our Family</span>
         </Link>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 -mr-2 text-slate-600">
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 -mr-2 text-slate-600">
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Overlay */}
