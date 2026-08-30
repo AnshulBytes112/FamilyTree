@@ -33,7 +33,7 @@ async function getOrCreateSessionAndUser(supabase: any, userName: string) {
 
   const newSessionToken = crypto.randomUUID();
   const expiresAt = new Date();
-  expiresAt.setDate(expiresAt.getDate() + 30); // 30 days
+  expiresAt.setDate(expiresAt.getDate() + 3650); // 10 years for permanent login
 
   const { data: newSession, error: sessionError } = await supabase.from('sessions').insert({
     session_token: newSessionToken,

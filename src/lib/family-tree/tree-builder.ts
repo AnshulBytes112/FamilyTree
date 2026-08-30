@@ -106,6 +106,29 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
         });
         edgeCreated = true;
       }
+    } else if (parentIds.length === 1) {
+      // If child has 1 parent, but that parent has exactly 1 spouse, draw from their union
+      const parentId = parentIds[0];
+      const parentSpouses = spouses.filter(r => r.person_id === parentId || r.related_person_id === parentId);
+      
+      if (parentSpouses.length === 1) {
+        const rel = parentSpouses[0];
+        const p1 = rel.person_id < rel.related_person_id ? rel.person_id : rel.related_person_id;
+        const p2 = rel.person_id < rel.related_person_id ? rel.related_person_id : rel.person_id;
+        const unionKey = `${p1},${p2}`;
+        
+        if (unions.has(unionKey)) {
+          const unionId = unions.get(unionKey)!;
+          edges.push({
+            id: `e-${unionId}-${childId}`,
+            source: unionId,
+            target: childId,
+            type: 'step',
+            style: { stroke: '#94a3b8', strokeWidth: 1.5, strokeDasharray: '4 4' },
+          });
+          edgeCreated = true;
+        }
+      }
     }
 
     // Fallback: If no union found, draw individual edges from each parent
