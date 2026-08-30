@@ -25,7 +25,7 @@ export default async function FamilyTreePage({
   // Fetch all people
   const { data: people, error: pError } = await supabase
     .from('people')
-    .select('id, name, gender, date_of_birth, date_of_death')
+    .select('id, name, gender, date_of_birth, date_of_death, place_of_birth, place_of_residence')
     .eq('family_id', familyId);
 
   if (pError) throw pError;

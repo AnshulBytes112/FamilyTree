@@ -16,6 +16,14 @@ function PersonNodeComponent({ data, selected }: { data: PersonData, selected: b
       years = `(${b})`;
     }
   }
+  // Formatting place
+  let place = data.place_of_birth || data.place_of_residence || '';
+
+  // Displaying gender
+  let genderDisplay = '';
+  if (data.gender === 'MALE') genderDisplay = 'Male';
+  else if (data.gender === 'FEMALE') genderDisplay = 'Female';
+  else if (data.gender === 'OTHER') genderDisplay = 'Other';
 
   return (
     <div 
@@ -30,9 +38,22 @@ function PersonNodeComponent({ data, selected }: { data: PersonData, selected: b
         {data.name.charAt(0).toUpperCase()}
       </div>
       
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 flex flex-col gap-0.5">
         <p className="font-bold text-slate-900 text-sm truncate">{data.name}</p>
-        {years && <p className="text-xs text-slate-500 font-medium truncate mt-0.5">{years}</p>}
+        
+        {/* Detail row 1: Place / Gender */}
+        {(place || genderDisplay) && (
+          <p className="text-[11px] text-slate-500 font-medium truncate">
+            {[place, genderDisplay].filter(Boolean).join(' • ')}
+          </p>
+        )}
+        
+        {/* Detail row 2: Years */}
+        {years && (
+          <p className="text-[11px] text-slate-400 font-medium truncate">
+            {years}
+          </p>
+        )}
       </div>
 
       <Handle type="source" position={Position.Bottom} className="opacity-0 w-0 h-0 border-0" />

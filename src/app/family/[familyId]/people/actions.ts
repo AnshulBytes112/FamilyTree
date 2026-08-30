@@ -41,15 +41,18 @@ export async function requireFamilyMember(familyId: string) {
 
 // --- SCHEMAS ---
 
-const personSchema = z.object({
+const basePersonSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   gender: z.enum(['MALE', 'FEMALE', 'OTHER', 'UNKNOWN']).default('UNKNOWN'),
   date_of_birth: z.string().optional().nullable().transform(v => v || null),
   date_of_death: z.string().optional().nullable().transform(v => v || null),
   place_of_birth: z.string().max(255).optional().nullable().transform(v => v || null),
   place_of_residence: z.string().max(255).optional().nullable().transform(v => v || null),
+  phone: z.string().max(50).optional().nullable().transform(v => v || null),
   notes: z.string().max(2000).optional().nullable().transform(v => v || null),
-}).superRefine((data, ctx) => {
+});
+
+const personRefinement = (data: any, ctx: z.RefinementCtx) => {
   if (data.date_of_birth && data.date_of_death) {
     if (new Date(data.date_of_death) < new Date(data.date_of_birth)) {
       ctx.addIssue({
@@ -59,7 +62,10 @@ const personSchema = z.object({
       });
     }
   }
-});
+};
+
+const personSchema = basePersonSchema.superRefine(personRefinement);
+const updatePersonSchema = basePersonSchema.superRefine(personRefinement);
 
 // --- ACTIONS ---
 
@@ -74,6 +80,7 @@ export async function createPerson(familyId: string, formData: FormData) {
       date_of_death: formData.get('date_of_death'),
       place_of_birth: formData.get('place_of_birth'),
       place_of_residence: formData.get('place_of_residence'),
+      phone: formData.get('phone'),
       notes: formData.get('notes'),
     };
     
@@ -120,10 +127,11 @@ export async function updatePerson(familyId: string, personId: string, formData:
       date_of_death: formData.get('date_of_death'),
       place_of_birth: formData.get('place_of_birth'),
       place_of_residence: formData.get('place_of_residence'),
+      phone: formData.get('phone'),
       notes: formData.get('notes'),
     };
     
-    const validatedData = personSchema.parse(rawData);
+    const validatedData = updatePersonSchema.parse(rawData);
 
     const { error } = await supabase
       .from('people')

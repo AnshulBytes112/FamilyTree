@@ -15,7 +15,6 @@ import {
 import { Plus, UserPlus, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { createPerson, createParentRelationship, createSpouseRelationship, getFamilyPeople } from '@/app/family/[familyId]/people/actions';
 import { useRouter } from 'next/navigation';
 
@@ -51,10 +50,6 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
     }
   };
 
-  const selectType = (type: 'father' | 'mother' | 'spouse' | 'child') => {
-    setRelType(type);
-    setStep('select'); // Next step is choosing existing vs new
-  };
 
   // Form action for existing person
   const handleExisting = async (prevState: unknown, formData: FormData) => {
@@ -69,7 +64,6 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
       } else if (relType === 'spouse') {
         await createSpouseRelationship(familyId, personId, selectedId);
       } else if (relType === 'brother' || relType === 'sister') {
-        // @ts-ignore createSiblingRelationship imported below or added
         const { createSiblingRelationship } = await import('@/app/family/[familyId]/people/actions');
         await createSiblingRelationship(familyId, personId, selectedId);
       }
@@ -98,7 +92,6 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
       } else if (relType === 'spouse') {
         await createSpouseRelationship(familyId, personId, newId);
       } else if (relType === 'brother' || relType === 'sister') {
-        // @ts-ignore
         const { createSiblingRelationship } = await import('@/app/family/[familyId]/people/actions');
         await createSiblingRelationship(familyId, personId, newId);
       }
@@ -173,16 +166,16 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
               </div>
 
               <form action={existingAction} className="space-y-4">
-                <Select name="existingPersonId">
-                  <SelectTrigger>
-                    <SelectValue placeholder={loadingPeople ? "Loading..." : "Select family member"} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {people.map(p => (
-                      <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <select 
+                  name="existingPersonId"
+                  className="flex h-12 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  defaultValue=""
+                >
+                  <option value="" disabled>{loadingPeople ? "Loading..." : "Select family member"}</option>
+                  {people.map(p => (
+                    <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+                </select>
                 
                 {existingState?.error && <p className="text-sm text-destructive">{existingState.error}</p>}
                 
@@ -207,20 +200,19 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
               </div>
               <div className="space-y-2">
                 <Label htmlFor="gender">Gender</Label>
-                <Select name="gender" defaultValue={
-                  relType === 'father' || relType === 'son' || relType === 'brother' ? 'MALE' : 
-                  relType === 'mother' || relType === 'daughter' || relType === 'sister' ? 'FEMALE' : 'UNKNOWN'
-                }>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="MALE">Male</SelectItem>
-                    <SelectItem value="FEMALE">Female</SelectItem>
-                    <SelectItem value="OTHER">Other</SelectItem>
-                    <SelectItem value="UNKNOWN">Prefer not to specify</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select 
+                  name="gender" 
+                  className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  defaultValue={
+                    relType === 'father' || relType === 'son' || relType === 'brother' ? 'MALE' : 
+                    relType === 'mother' || relType === 'daughter' || relType === 'sister' ? 'FEMALE' : 'UNKNOWN'
+                  }
+                >
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other</option>
+                  <option value="UNKNOWN">Prefer not to specify</option>
+                </select>
               </div>
               
               {newState?.error && <p className="text-sm text-destructive">{newState.error}</p>}

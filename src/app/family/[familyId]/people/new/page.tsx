@@ -130,7 +130,7 @@ export default function AddPersonPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <Label htmlFor="date_of_birth" className="text-sm font-semibold text-slate-900">
-                  {t('people.dobLabel', { defaultMessage: 'Date of birth' })}
+                  {t('people.dobLabel', { defaultMessage: 'Date of birth' })} <span className="text-slate-400 font-normal ml-1">({t('people.optional', { defaultMessage: 'Optional' })})</span>
                 </Label>
                 <Input
                   id="date_of_birth"
@@ -171,6 +171,19 @@ export default function AddPersonPage() {
               <Input
                 id="place_of_residence"
                 name="place_of_residence"
+                placeholder={t('people.optional', { defaultMessage: 'Optional' })}
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-sm font-semibold text-slate-900">
+                {t('people.phoneLabel', { defaultMessage: 'Phone number' })} <span className="text-slate-400 font-normal ml-1">({t('people.optional', { defaultMessage: 'Optional' })})</span>
+              </Label>
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
                 placeholder={t('people.optional', { defaultMessage: 'Optional' })}
                 className="h-11"
               />

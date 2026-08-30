@@ -4,10 +4,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useTranslations } from 'next-intl';
 import { useState, useActionState, useEffect } from 'react';
-import { createParentRelationship, createSpouseRelationship, getFamilyPeople } from '@/app/family/[familyId]/people/actions';
+import { createParentRelationship, createSpouseRelationship, createSiblingRelationship, getFamilyPeople } from '@/app/family/[familyId]/people/actions';
 import { buttonVariants } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, ChevronLeft } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -32,11 +31,15 @@ export default function AddRelationshipsPage() {
     const fatherId = formData.get('fatherId') as string;
     const motherId = formData.get('motherId') as string;
     const spouseId = formData.get('spouseId') as string;
+    const brotherId = formData.get('brotherId') as string;
+    const sisterId = formData.get('sisterId') as string;
 
     try {
       if (fatherId && fatherId !== 'none') await createParentRelationship(params.familyId, params.personId, fatherId);
       if (motherId && motherId !== 'none') await createParentRelationship(params.familyId, params.personId, motherId);
       if (spouseId && spouseId !== 'none') await createSpouseRelationship(params.familyId, params.personId, spouseId);
+      if (brotherId && brotherId !== 'none') await createSiblingRelationship(params.familyId, params.personId, brotherId);
+      if (sisterId && sisterId !== 'none') await createSiblingRelationship(params.familyId, params.personId, sisterId);
       
       router.push(`/family/${params.familyId}/people/${params.personId}`);
       return { success: true };
@@ -52,17 +55,16 @@ export default function AddRelationshipsPage() {
       <Label htmlFor={name} className="text-sm font-semibold text-slate-900">
         {label}
       </Label>
-      <Select name={name} defaultValue="none">
-        <SelectTrigger className="h-12 bg-slate-50/50">
-          <SelectValue placeholder="Select family member" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="none" className="text-slate-400 italic">None selected</SelectItem>
-          {people.map(p => (
-            <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <select 
+        name={name} 
+        defaultValue="none"
+        className="flex h-12 w-full items-center justify-between rounded-md border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors cursor-pointer"
+      >
+        <option value="none" className="italic text-slate-500">None selected</option>
+        {people.map(p => (
+          <option key={p.id} value={p.id} className="text-slate-900">{p.name}</option>
+        ))}
+      </select>
     </div>
   );
 
@@ -89,6 +91,8 @@ export default function AddRelationshipsPage() {
               {renderSelect('fatherId', t('people.father', { defaultMessage: 'Father' }))}
               {renderSelect('motherId', t('people.mother', { defaultMessage: 'Mother' }))}
               {renderSelect('spouseId', t('people.spouse', { defaultMessage: 'Spouse' }))}
+              {renderSelect('brotherId', t('people.brother', { defaultMessage: 'Brother' }))}
+              {renderSelect('sisterId', t('people.sister', { defaultMessage: 'Sister' }))}
               
               {state?.error && (
                 <p className="text-sm font-medium text-destructive bg-destructive/10 p-3 rounded-md border border-destructive/20">

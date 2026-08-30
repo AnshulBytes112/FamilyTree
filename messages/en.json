@@ -61,7 +61,8 @@
       "relationshipFinder": "Relationship Finder",
       "photos": "Photos",
       "events": "Events",
-      "settings": "Settings"
+      "settings": "Settings",
+      "inviteMembers": "Invite Members"
     },
     "header": {
       "title": "Dashboard",
@@ -105,7 +106,8 @@
       "label": "Invited Members",
       "joined": "Joined",
       "pending": "Pending"
-    }
+    },
+    "noMembersJoined": "No members have joined yet."
   },
   "people": {
     "personAdded": "Person Added",
@@ -165,7 +167,18 @@
     "emptyTreeDesc": "Start by adding someone to your family.",
     "zoomIn": "Zoom In",
     "zoomOut": "Zoom Out",
-    "fitView": "Fit View"
+    "fitView": "Fit View",
+    "filter": "Filter",
+    "all": "All",
+    "male": "Male",
+    "female": "Female",
+    "unknown": "Other / Unknown",
+    "searchPeople": "Search people...",
+    "noResults": "No family members match your search.",
+    "noMembers": "No family members yet.",
+    "addFirstMember": "Add your first family member to start building your family tree.",
+    "years": "years",
+    "nameImmutable": "Name cannot be changed after creation."
   },
   "branches": {
     "title": "Family Branches",

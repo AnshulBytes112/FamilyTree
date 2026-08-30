@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { 
   Trees, LayoutDashboard, Network, Users, 
   GitBranch, Search, Image as ImageIcon, 
-  Calendar, Settings, Menu, X
+  Calendar, Settings, Menu, X, UserPlus
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -28,6 +28,7 @@ export function AppSidebar({ familyId }: { familyId: string }) {
     { name: t('people'), href: `/family/${familyId}/people`, icon: Users },
     { name: t('branches'), href: `/family/${familyId}/branches`, icon: GitBranch },
     { name: t('relationshipFinder'), href: `/family/${familyId}/relationships`, icon: Search },
+    { name: t('inviteMembers', { defaultMessage: 'Invite Members' }), href: `/family/${familyId}/invite`, icon: UserPlus },
     { name: t('photos'), href: `/family/${familyId}/photos`, icon: ImageIcon, disabled: true },
     { name: 'Events', href: `/family/${familyId}/events`, icon: Calendar, disabled: true },
     { name: t('settings', { defaultMessage: 'Settings' }), href: `/family/${familyId}/settings`, icon: Settings, disabled: true },

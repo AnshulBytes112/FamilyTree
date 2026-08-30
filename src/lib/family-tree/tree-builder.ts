@@ -17,6 +17,8 @@ export function buildTree(people: RawPerson[], relationships: RawRelationship[])
         gender: p.gender as PersonData['gender'],
         date_of_birth: p.date_of_birth,
         date_of_death: p.date_of_death,
+        place_of_birth: p.place_of_birth,
+        place_of_residence: p.place_of_residence,
       },
     });
   }

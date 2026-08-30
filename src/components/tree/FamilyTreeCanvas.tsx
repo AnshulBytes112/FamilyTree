@@ -208,7 +208,7 @@ function FlowCanvas({
         </Panel>
 
         {/* Left Controls Panel */}
-        <Panel position="middle-left" className="m-4 md:m-6 flex flex-col gap-1.5 z-40">
+        <Panel position="top-left" className="m-4 md:m-6 flex flex-col gap-1.5 z-40">
           <button onClick={() => {
             if (initialPersonId) focusPerson(initialPersonId, nodes);
             else fitView({ padding: 0.2, duration: 800 });

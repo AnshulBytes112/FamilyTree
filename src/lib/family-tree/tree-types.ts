@@ -6,6 +6,8 @@ export type PersonData = {
   gender: 'MALE' | 'FEMALE' | 'OTHER' | 'UNKNOWN';
   date_of_birth?: string | null;
   date_of_death?: string | null;
+  place_of_birth?: string | null;
+  place_of_residence?: string | null;
   isHighlighted?: boolean;
 };
 
@@ -22,6 +24,8 @@ export interface RawPerson {
   gender: string;
   date_of_birth: string | null;
   date_of_death: string | null;
+  place_of_birth?: string | null;
+  place_of_residence?: string | null;
 }
 
 export interface RawRelationship {
