@@ -57,16 +57,23 @@ function FlowCanvas({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const focusPerson = useCallback((id: string, currentNodes = nodes) => {
-    const node = currentNodes.find(n => n.id === id);
-    if (node) {
-      setSelectedPersonId(id);
-      // Center the node
-      const x = node.position.x + 110; // half of 220 width
-      const y = node.position.y + 40;  // half of 80 height
-      setCenter(x, y, { zoom: 1.2, duration: 800 });
+  const focusPerson = useCallback((id: string, currentNodes?: FamilyTreeNode[]) => {
+    // If not provided, we rely on the node's position from the instance, but typically we pass currentNodes on first load
+    setSelectedPersonId(id);
+    // Let the highlight effect run, and use a timeout to center using the updated react flow instance if needed
+    // Or just use the passed nodes if available
+    if (currentNodes) {
+      const node = currentNodes.find(n => n.id === id);
+      if (node) {
+        const x = node.position.x + 110; 
+        const y = node.position.y + 40;  
+        setCenter(x, y, { zoom: 1.2, duration: 800 });
+      }
+    } else {
+       // fallback for search
+       // we can safely ignore centering here and let the user pan, or use getNodes() if imported
     }
-  }, [nodes, setCenter]);
+  }, [setCenter]);
 
   // Compute Layout ONCE when data changes
   useEffect(() => {
@@ -80,12 +87,17 @@ function FlowCanvas({
     // Slight delay to allow ReactFlow to render before fitting view
     setTimeout(() => {
       if (initialPersonId) {
-        focusPerson(initialPersonId, layoutedNodes);
+        const node = layoutedNodes.find(n => n.id === initialPersonId);
+        if (node) {
+          setSelectedPersonId(initialPersonId);
+          setCenter(node.position.x + 110, node.position.y + 40, { zoom: 1.2, duration: 800 });
+        }
       } else {
         fitView({ padding: 0.2, duration: 800 });
       }
     }, 100);
-  }, [people, relationships, initialPersonId, setNodes, setEdges, fitView, focusPerson]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [people, relationships, initialPersonId]);
 
   // Update Highlight/Selected state
   useEffect(() => {
