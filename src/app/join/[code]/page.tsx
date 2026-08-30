@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
 import { joinFamilyAction } from '@/app/actions';

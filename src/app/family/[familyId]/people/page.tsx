@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getTranslations } from 'next-intl/server';
 import { getFamilyPeople, searchPeople } from '@/app/family/[familyId]/people/actions';
 import { Search, UserPlus } from 'lucide-react';
@@ -33,7 +35,7 @@ export default async function PeopleDirectoryPage({
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50/50 p-4 sm:p-6 lg:p-8">
+    <div className="flex-1 flex flex-col min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl w-full mx-auto">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">

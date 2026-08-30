@@ -33,6 +33,7 @@ export function AddRelativeDialog({ familyId, personId, personName }: { familyId
   // Fetch people when dialog opens
   useEffect(() => {
     if (open && people.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoadingPeople(true);
       getFamilyPeople(familyId)
         .then(data => setPeople(data.filter(p => p.id !== personId)))

@@ -47,7 +47,7 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50/50 p-4 sm:p-6 lg:p-8">
+    <div className="flex-1 flex flex-col min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-3xl w-full mx-auto">
         
         <div className="mb-6">

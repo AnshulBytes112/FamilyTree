@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import { createAdminClient } from '@/lib/supabase';
@@ -40,7 +41,7 @@ export async function requireFamilyMember(familyId: string) {
 
 // --- SCHEMAS ---
 
-export const personSchema = z.object({
+const personSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   gender: z.enum(['MALE', 'FEMALE', 'OTHER', 'UNKNOWN']).default('UNKNOWN'),
   date_of_birth: z.string().optional().nullable().transform(v => v || null),

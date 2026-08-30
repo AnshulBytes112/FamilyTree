@@ -18,7 +18,7 @@ export default async function InvitePage({ params }: { params: Promise<{ familyI
   const inviteCode = data?.code || null;
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50/50 p-4 sm:p-8">
+    <div className="flex-1 flex flex-col min-h-screen p-4 sm:p-8">
       <div className="max-w-4xl w-full mx-auto">
         <Card className="border border-slate-200 shadow-sm rounded-xl overflow-hidden">
           <CardHeader className="bg-white border-b border-slate-100 px-6 py-5">

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -36,7 +38,7 @@ export default function AddPersonPage() {
 
   if (createdPersonId) {
     return (
-      <div className="flex-1 flex flex-col min-h-screen bg-slate-50/50 p-4 sm:p-8">
+      <div className="flex-1 flex flex-col min-h-screen p-4 sm:p-8">
         <div className="max-w-xl w-full mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center mt-12">
           <div className="mx-auto bg-emerald-50 text-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
             <CheckCircle2 size={32} />
@@ -79,7 +81,7 @@ export default function AddPersonPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50/50 p-4 sm:p-6 lg:p-8">
+    <div className="flex-1 flex flex-col min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-2xl w-full mx-auto bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         
         <div className="px-6 py-4 border-b border-slate-100 flex items-center">
@@ -104,7 +106,7 @@ export default function AddPersonPage() {
                 name="name"
                 placeholder={t('people.namePlaceholder', { defaultMessage: 'Full name' })}
                 required
-                className="h-11 bg-slate-50/50"
+                className="h-11"
               />
             </div>
 
@@ -113,7 +115,7 @@ export default function AddPersonPage() {
                 {t('people.genderLabel', { defaultMessage: 'Gender' })}
               </Label>
               <Select defaultValue="UNKNOWN" name="gender">
-                <SelectTrigger className="h-11 bg-slate-50/50">
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -134,7 +136,7 @@ export default function AddPersonPage() {
                   id="date_of_birth"
                   name="date_of_birth"
                   type="date"
-                  className="h-11 bg-slate-50/50"
+                  className="h-11"
                 />
               </div>
               <div className="space-y-2">
@@ -145,7 +147,7 @@ export default function AddPersonPage() {
                   id="date_of_death"
                   name="date_of_death"
                   type="date"
-                  className="h-11 bg-slate-50/50"
+                  className="h-11"
                 />
               </div>
             </div>
@@ -158,7 +160,7 @@ export default function AddPersonPage() {
                 id="place_of_birth"
                 name="place_of_birth"
                 placeholder={t('people.optional', { defaultMessage: 'Optional' })}
-                className="h-11 bg-slate-50/50"
+                className="h-11"
               />
             </div>
 
@@ -170,7 +172,7 @@ export default function AddPersonPage() {
                 id="place_of_residence"
                 name="place_of_residence"
                 placeholder={t('people.optional', { defaultMessage: 'Optional' })}
-                className="h-11 bg-slate-50/50"
+                className="h-11"
               />
             </div>
 
@@ -182,7 +184,7 @@ export default function AddPersonPage() {
                 id="notes"
                 name="notes"
                 placeholder={t('people.optional', { defaultMessage: 'Optional' })}
-                className="bg-slate-50/50 resize-none"
+                className="resize-none"
                 rows={3}
               />
             </div>

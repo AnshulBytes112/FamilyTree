@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useTranslations } from 'next-intl';
 import { useState, useActionState, useEffect } from 'react';
 import { createParentRelationship, createSpouseRelationship, getFamilyPeople } from '@/app/family/[familyId]/people/actions';

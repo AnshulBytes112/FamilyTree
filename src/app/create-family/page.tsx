@@ -73,7 +73,7 @@ export default function CreateFamilyPage() {
                   {t('createFamily.roleLabel')}
                 </Label>
                 <Select defaultValue="admin" name="role">
-                  <SelectTrigger className="h-12 bg-slate-50/50">
+                  <SelectTrigger className="h-12">
                     <SelectValue placeholder={t('createFamily.rolePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
