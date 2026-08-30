@@ -42,27 +42,30 @@ export function calculateGenerations(people: RawPerson[], relationships: RawRela
     while (queue.length > 0) {
       const { id, gen } = queue.shift()!;
       
+      let changed = false;
       if (genMap.has(id)) {
         // If already visited, only update if the new generation is higher (max depth)
         if (genMap.get(id)! < gen) {
           genMap.set(id, gen);
-        } else {
-          continue;
+          changed = true;
         }
       } else {
         genMap.set(id, gen);
+        changed = true;
       }
 
-      const nodeInfo = graph.get(id)!;
-      
-      // Spouses get the same generation
-      for (const spouse of nodeInfo.spouses) {
-        queue.push({ id: spouse, gen });
-      }
+      if (changed) {
+        const nodeInfo = graph.get(id)!;
+        
+        // Spouses get the same generation
+        for (const spouse of nodeInfo.spouses) {
+          queue.push({ id: spouse, gen });
+        }
 
-      // Children get gen + 1
-      for (const child of nodeInfo.children) {
-        queue.push({ id: child, gen: gen + 1 });
+        // Children get gen + 1
+        for (const child of nodeInfo.children) {
+          queue.push({ id: child, gen: gen + 1 });
+        }
       }
     }
   }
