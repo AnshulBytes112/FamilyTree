@@ -13,12 +13,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2, ChevronLeft, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
 export default function AddPersonPage() {
   const t = useTranslations();
   const params = useParams() as { familyId: string };
+  const searchParams = useSearchParams();
   const familyId = params.familyId;
+  const isWelcome = searchParams.get('welcome') === 'true';
   
   const [createdPersonId, setCreatedPersonId] = useState<string | null>(null);
   const [createdName, setCreatedName] = useState<string>('');
@@ -43,9 +45,13 @@ export default function AddPersonPage() {
           <div className="mx-auto bg-emerald-50 text-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
             <CheckCircle2 size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">{t('people.personAdded', { defaultMessage: 'Person Added' })}</h1>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            {isWelcome ? "Profile Created!" : t('people.personAdded', { defaultMessage: 'Person Added' })}
+          </h1>
           <p className="text-slate-500 mb-10">
-            {t('people.personAddedDesc', { name: createdName, defaultMessage: `${createdName} has been added to your family.` })}
+            {isWelcome 
+              ? `${createdName}, your profile has been successfully added to the family tree.`
+              : t('people.personAddedDesc', { name: createdName, defaultMessage: `${createdName} has been added to your family.` })}
           </p>
           
           <h2 className="text-sm font-semibold text-slate-900 mb-4">{t('people.whatNext', { defaultMessage: 'What would you like to do next?' })}</h2>
@@ -92,8 +98,14 @@ export default function AddPersonPage() {
 
         <div className="p-6 md:p-8">
           <div className="mb-8">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-1">{t('people.addFamilyMember', { defaultMessage: 'Add Family Member' })}</h1>
-            <p className="text-slate-500 text-sm">{t('people.whoToAdd', { defaultMessage: 'Who would you like to add?' })}</p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-1">
+              {isWelcome ? "Create Your Profile" : t('people.addFamilyMember', { defaultMessage: 'Add Family Member' })}
+            </h1>
+            <p className="text-slate-500 text-sm">
+              {isWelcome 
+                ? "Welcome to the family! Please add your details to the family tree."
+                : t('people.whoToAdd', { defaultMessage: 'Who would you like to add?' })}
+            </p>
           </div>
 
           <form action={formAction} className="space-y-5">
@@ -217,7 +229,7 @@ export default function AddPersonPage() {
                 {isPending ? (
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 ) : null}
-                {t('people.addPersonBtn', { defaultMessage: 'Add Person' })}
+                {isWelcome ? "Create Profile" : t('people.addPersonBtn', { defaultMessage: 'Add Person' })}
               </button>
             </div>
           </form>

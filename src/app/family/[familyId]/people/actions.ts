@@ -372,41 +372,61 @@ export async function getPersonWithRelationships(familyId: string, personId: str
 
   if (personError || !person) throw new Error("Person not found");
 
-  // Get relationships where person is the child (finding parents)
-  const { data: parentsData } = await supabase
+  // Get all relationships involving this person
+  const { data: rels, error: relsError } = await supabase
     .from('relationships')
-    .select('id, type, related_person:people!relationships_related_person_id_fkey(id, name, gender, date_of_birth, date_of_death)')
+    .select('*')
     .eq('family_id', familyId)
-    .eq('person_id', personId)
-    .eq('type', 'PARENT');
+    .or(`person_id.eq.${personId},related_person_id.eq.${personId}`);
 
-  // Get relationships where person is the parent (finding children)
-  const { data: childrenData } = await supabase
-    .from('relationships')
-    .select('id, type, child_person:people!relationships_person_id_fkey(id, name, gender, date_of_birth, date_of_death)')
-    .eq('family_id', familyId)
-    .eq('related_person_id', personId)
-    .eq('type', 'PARENT');
+  if (relsError) throw new Error("Failed to fetch relationships");
 
-  // Get spouses (can be in either person_id or related_person_id because of canonical ordering)
-  const { data: spousesData1 } = await supabase
-    .from('relationships')
-    .select('id, type, spouse:people!relationships_related_person_id_fkey(id, name, gender, date_of_birth, date_of_death)')
-    .eq('family_id', familyId)
-    .eq('person_id', personId)
-    .eq('type', 'SPOUSE');
-    
-  const { data: spousesData2 } = await supabase
-    .from('relationships')
-    .select('id, type, spouse:people!relationships_person_id_fkey(id, name, gender, date_of_birth, date_of_death)')
-    .eq('family_id', familyId)
-    .eq('related_person_id', personId)
-    .eq('type', 'SPOUSE');
+  const relatedPersonIds = new Set<string>();
+  for (const r of rels || []) {
+    if (r.person_id !== personId) relatedPersonIds.add(r.person_id);
+    if (r.related_person_id !== personId) relatedPersonIds.add(r.related_person_id);
+  }
+
+  // Fetch all related people
+  let relatedPeople: any[] = [];
+  if (relatedPersonIds.size > 0) {
+    const { data: peopleData, error: peopleError } = await supabase
+      .from('people')
+      .select('id, name, gender, date_of_birth, date_of_death')
+      .eq('family_id', familyId)
+      .in('id', Array.from(relatedPersonIds));
+      
+    if (!peopleError && peopleData) {
+      relatedPeople = peopleData;
+    }
+  }
+
+  const peopleMap = new Map(relatedPeople.map(p => [p.id, p]));
+
+  // Map relationships
+  const parents = (rels || [])
+    .filter(r => r.person_id === personId && r.type === 'PARENT')
+    .map(r => ({ id: r.id, type: r.type, related_person: peopleMap.get(r.related_person_id) }))
+    .filter(r => r.related_person);
+
+  const children = (rels || [])
+    .filter(r => r.related_person_id === personId && r.type === 'PARENT')
+    .map(r => ({ id: r.id, type: r.type, child_person: peopleMap.get(r.person_id) }))
+    .filter(r => r.child_person);
+
+  const spouses = (rels || [])
+    .filter(r => r.type === 'SPOUSE')
+    .map(r => ({ 
+      id: r.id, 
+      type: r.type, 
+      spouse: peopleMap.get(r.person_id === personId ? r.related_person_id : r.person_id) 
+    }))
+    .filter(r => r.spouse);
 
   return {
     person,
-    parents: parentsData || [],
-    children: childrenData || [],
-    spouses: [...(spousesData1 || []), ...(spousesData2 || [])]
+    parents,
+    children,
+    spouses
   };
 }

@@ -83,6 +83,53 @@ export default async function PersonProfilePage({ params }: { params: Promise<{ 
             </div>
           </div>
 
+          <div className="p-6 md:p-8 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 mb-6">{t('people.about', { defaultMessage: 'About' })}</h2>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+              {person.date_of_birth && (
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.dobLabel', { defaultMessage: 'Date of birth' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900">{new Date(person.date_of_birth).toLocaleDateString()}</dd>
+                </div>
+              )}
+              {person.date_of_death && (
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.dodLabel', { defaultMessage: 'Date of death' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900">{new Date(person.date_of_death).toLocaleDateString()}</dd>
+                </div>
+              )}
+              {person.place_of_birth && (
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.pobLabel', { defaultMessage: 'Place of birth' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900">{person.place_of_birth}</dd>
+                </div>
+              )}
+              {person.place_of_residence && (
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.porLabel', { defaultMessage: 'Place of residence' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900">{person.place_of_residence}</dd>
+                </div>
+              )}
+              {person.phone && (
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.phoneLabel', { defaultMessage: 'Phone number' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900">{person.phone}</dd>
+                </div>
+              )}
+              {person.notes && (
+                <div className="sm:col-span-2">
+                  <dt className="text-sm font-semibold text-slate-500 mb-1">{t('people.notesLabel', { defaultMessage: 'Notes' })}</dt>
+                  <dd className="text-sm font-medium text-slate-900 whitespace-pre-wrap">{person.notes}</dd>
+                </div>
+              )}
+              {!person.date_of_birth && !person.date_of_death && !person.place_of_birth && !person.place_of_residence && !person.phone && !person.notes && (
+                <div className="sm:col-span-2 text-sm text-slate-500 italic">
+                  No additional details provided.
+                </div>
+              )}
+            </dl>
+          </div>
+
           <div className="p-6 md:p-8">
             <h2 className="text-lg font-bold text-slate-900 mb-6">{t('people.family', { defaultMessage: 'Family' })}</h2>
             

@@ -19,7 +19,7 @@ export default function JoinFamilyPage() {
 
   useEffect(() => {
     if (state?.success && state?.familyId) {
-      router.push(`/family/${state.familyId}`);
+      router.push(`/family/${state.familyId}/people/new?welcome=true`);
     }
   }, [state, router]);
 

@@ -147,7 +147,7 @@ export default function EditPersonPage() {
                   id="date_of_birth"
                   name="date_of_birth"
                   type="date"
-                  defaultValue={person.date_of_birth || ''}
+                  defaultValue={person.date_of_birth ? person.date_of_birth.split('T')[0] : ''}
                   className="h-11 bg-slate-50/50"
                 />
               </div>
@@ -159,7 +159,7 @@ export default function EditPersonPage() {
                   id="date_of_death"
                   name="date_of_death"
                   type="date"
-                  defaultValue={person.date_of_death || ''}
+                  defaultValue={person.date_of_death ? person.date_of_death.split('T')[0] : ''}
                   className="h-11 bg-slate-50/50"
                 />
               </div>

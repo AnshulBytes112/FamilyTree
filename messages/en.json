@@ -57,6 +57,7 @@
       "dashboard": "Dashboard",
       "familyTree": "Family Tree",
       "people": "People",
+      "generations": "Generations",
       "branches": "Branches",
       "relationshipFinder": "Relationship Finder",
       "photos": "Photos",
@@ -178,7 +179,9 @@
     "noMembers": "No family members yet.",
     "addFirstMember": "Add your first family member to start building your family tree.",
     "years": "years",
-    "nameImmutable": "Name cannot be changed after creation."
+    "nameImmutable": "Name cannot be changed after creation.",
+    "about": "About",
+    "phoneLabel": "Phone number"
   },
   "branches": {
     "title": "Family Branches",

@@ -2,8 +2,9 @@ import { getTranslations } from 'next-intl/server';
 import { createAdminClient } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { buttonVariants } from '@/components/ui/button';
+import { calculateGenerations } from '@/lib/family-tree/generations';
 import { cn } from '@/lib/utils';
 import { 
   Trees, 
@@ -61,18 +62,30 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
     .select('id, name, created_at')
     .eq('family_id', resolvedParams.familyId)
     .order('created_at', { ascending: false })
-    .limit(3);
+    .limit(5);
+
+  const { data: allPeople } = await supabase
+    .from('people')
+    .select('id, name, gender, date_of_birth, date_of_death')
+    .eq('family_id', resolvedParams.familyId);
+
+  const { data: allRelationships } = await supabase
+    .from('relationships')
+    .select('id, person_id, related_person_id, type')
+    .eq('family_id', resolvedParams.familyId);
+
+  const { maxGenerations, generationGroups } = calculateGenerations(allPeople || [], allRelationships || []);
 
   const stats = [
     { label: t('stats.members'), value: peopleCount || 0 },
     { label: t('stats.contributors', { defaultMessage: 'Contributors' }), value: contributorCount || 1 },
     { label: t('stats.branches', { defaultMessage: 'Branches' }), value: branchCount || 0 },
-    { label: t('stats.generations'), value: "—" }, // Coming later
+    { label: t('stats.generations'), value: maxGenerations }, 
   ];
 
   const recentMembers = (recentPeople || []).map(p => ({
     name: p.name,
-    time: "Just now", // In a real app we'd calculate time difference
+    time: "Recently added", 
     img: p.name.charAt(0).toUpperCase()
   }));
 
@@ -150,11 +163,11 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
 
         {/* Recent Activity */}
         <Card className="border-slate-200 shadow-sm rounded-xl">
-          <div className="px-6 pt-6 pb-4">
+          <div className="px-6 pt-6 pb-4 border-b border-slate-50">
             <h3 className="font-bold text-[15px] text-slate-900 tracking-tight">{t('recentActivity.title', { defaultMessage: 'Recent Activity' })}</h3>
           </div>
           <CardContent className="p-0">
-            <ul className="px-2">
+            <ul className="px-2 pt-2">
               {recentActivity.map((activity, i) => {
                 const Icon = activity.icon;
                 return (

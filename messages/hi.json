@@ -57,6 +57,7 @@
       "dashboard": "डैशबोर्ड",
       "familyTree": "फैमिली ट्री",
       "people": "लोग",
+      "generations": "पीढ़ियाँ",
       "branches": "शाखाएं",
       "relationshipFinder": "रिश्ता खोजक",
       "photos": "तस्वीरें",
@@ -178,7 +179,9 @@
     "noMembers": "अभी तक कोई सदस्य नहीं।",
     "addFirstMember": "अपना फैमिली ट्री बनाना शुरू करने के लिए अपना पहला सदस्य जोड़ें।",
     "years": "वर्ष",
-    "nameImmutable": "बनाने के बाद नाम बदला नहीं जा सकता।"
+    "nameImmutable": "बनाने के बाद नाम बदला नहीं जा सकता।",
+    "about": "के बारे में",
+    "phoneLabel": "फ़ोन नंबर"
   },
   "branches": {
     "title": "Family Branches",

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { 
-  Trees, LayoutDashboard, Network, Users, 
+  Trees, LayoutDashboard, Network, Users, Layers,
   GitBranch, Search, Image as ImageIcon, 
   Calendar, Settings, Menu, X, UserPlus
 } from 'lucide-react';
@@ -26,6 +26,7 @@ export function AppSidebar({ familyId }: { familyId: string }) {
     { name: t('dashboard'), href: `/family/${familyId}`, icon: LayoutDashboard },
     { name: t('familyTree'), href: `/family/${familyId}/tree`, icon: Network },
     { name: t('people'), href: `/family/${familyId}/people`, icon: Users },
+    { name: t('generations', { defaultMessage: 'Generations' }), href: `/family/${familyId}/generations`, icon: Layers },
     { name: t('branches'), href: `/family/${familyId}/branches`, icon: GitBranch },
     { name: t('relationshipFinder'), href: `/family/${familyId}/relationships`, icon: Search },
     { name: t('inviteMembers', { defaultMessage: 'Invite Members' }), href: `/family/${familyId}/invite`, icon: UserPlus },
