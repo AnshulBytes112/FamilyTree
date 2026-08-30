@@ -1,0 +1,58 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "back": "Back"
+  },
+  "landing": {
+    "title": "Our Family",
+    "howItWorks": "How it works",
+    "heroTitle1": "Preserve your family story.",
+    "heroTitle2": "Build your family tree together.",
+    "heroSubtitle": "Invite relatives. Connect generations.",
+    "createFamilyBtn": "Create a Family",
+    "joinFamilyBtn": "Join Family",
+    "footer": "Simple • Private • Collaborative"
+  },
+  "createFamily": {
+    "title": "Create Your Family",
+    "subtitle": "Start your family tree and invite your relatives.",
+    "familyNameLabel": "Family Name",
+    "familyNamePlaceholder": "e.g. Sharma Family",
+    "yourNameLabel": "Your Name",
+    "yourNamePlaceholder": "Enter your name",
+    "submitBtn": "Create Family",
+    "successTitle": "Family Created!",
+    "successSubtitle": "Your family space is ready."
+  },
+  "joinFamily": {
+    "title": "Join a Family",
+    "subtitle": "Enter the invite code shared by your family member.",
+    "codeLabel": "Invite Code",
+    "codePlaceholder": "e.g. ABCD1234",
+    "yourNameLabel": "Your Name",
+    "yourNamePlaceholder": "Enter your name",
+    "submitBtn": "Join Family",
+    "invalidCode": "Invalid or expired invite code."
+  },
+  "invite": {
+    "title": "Invite Your Family",
+    "subtitle": "Share this link with your relatives.",
+    "copyLinkBtn": "Copy Link",
+    "shareWhatsappBtn": "Share on WhatsApp",
+    "linkCopied": "Link copied to clipboard!"
+  },
+  "dashboard": {
+    "title": "Our Family",
+    "welcome": "Welcome, {name}.",
+    "membersCount": "Members",
+    "inviteBtn": "Invite Relatives",
+    "addMemberBtn": "+ Add Family Member",
+    "recentActivity": "Recent Activity",
+    "activityCreated": "You created the family",
+    "justNow": "Just now",
+    "emptyStateTitle": "Your family tree is just beginning.",
+    "emptyStateSubtitle": "Add your first family member and start connecting generations.",
+    "comingSoon": "Coming Soon"
+  }
+}

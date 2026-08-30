@@ -1,0 +1,58 @@
+{
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "back": "वापस"
+  },
+  "landing": {
+    "title": "हमारा परिवार",
+    "howItWorks": "यह कैसे काम करता है",
+    "heroTitle1": "अपने परिवार की कहानी सहेजें।",
+    "heroTitle2": "मिलकर अपना परिवार वृक्ष बनाएं।",
+    "heroSubtitle": "रिश्तेदारों को आमंत्रित करें। पीढ़ियों को जोड़ें।",
+    "createFamilyBtn": "परिवार बनाएं",
+    "joinFamilyBtn": "परिवार में शामिल हों",
+    "footer": "सरल • निजी • सहयोगी"
+  },
+  "createFamily": {
+    "title": "अपना परिवार बनाएं",
+    "subtitle": "अपना परिवार वृक्ष शुरू करें और रिश्तेदारों को आमंत्रित करें।",
+    "familyNameLabel": "परिवार का नाम",
+    "familyNamePlaceholder": "जैसे शर्मा परिवार",
+    "yourNameLabel": "आपका नाम",
+    "yourNamePlaceholder": "अपना नाम दर्ज करें",
+    "submitBtn": "परिवार बनाएं",
+    "successTitle": "परिवार बन गया!",
+    "successSubtitle": "आपके परिवार का स्थान तैयार है।"
+  },
+  "joinFamily": {
+    "title": "परिवार में शामिल हों",
+    "subtitle": "अपने परिवार के सदस्य द्वारा साझा किया गया आमंत्रण कोड दर्ज करें।",
+    "codeLabel": "आमंत्रण कोड",
+    "codePlaceholder": "जैसे ABCD1234",
+    "yourNameLabel": "आपका नाम",
+    "yourNamePlaceholder": "अपना नाम दर्ज करें",
+    "submitBtn": "परिवार में शामिल हों",
+    "invalidCode": "अमान्य या समाप्त आमंत्रण कोड।"
+  },
+  "invite": {
+    "title": "अपने परिवार को आमंत्रित करें",
+    "subtitle": "इस लिंक को अपने रिश्तेदारों के साथ साझा करें।",
+    "copyLinkBtn": "लिंक कॉपी करें",
+    "shareWhatsappBtn": "WhatsApp पर साझा करें",
+    "linkCopied": "लिंक क्लिपबोर्ड पर कॉपी हो गया!"
+  },
+  "dashboard": {
+    "title": "हमारा परिवार",
+    "welcome": "स्वागत है, {name}।",
+    "membersCount": "सदस्य",
+    "inviteBtn": "रिश्तेदारों को आमंत्रित करें",
+    "addMemberBtn": "+ परिवार का सदस्य जोड़ें",
+    "recentActivity": "हाल की गतिविधि",
+    "activityCreated": "आपने परिवार बनाया",
+    "justNow": "अभी-अभी",
+    "emptyStateTitle": "आपका परिवार वृक्ष अभी शुरू हो रहा है।",
+    "emptyStateSubtitle": "अपने पहले परिवार के सदस्य को जोड़ें और पीढ़ियों को जोड़ना शुरू करें।",
+    "comingSoon": "जल्द आ रहा है"
+  }
+}
