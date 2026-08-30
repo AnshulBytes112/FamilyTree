@@ -28,6 +28,24 @@ export function calculateGenerations(people: RawPerson[], relationships: RawRela
     }
   }
 
+  // Implicitly link co-parents as spouses so their generations align
+  for (const [id, info] of graph.entries()) {
+    if (info.parents.length > 1) {
+      for (let i = 0; i < info.parents.length; i++) {
+        for (let j = i + 1; j < info.parents.length; j++) {
+          const p1 = info.parents[i];
+          const p2 = info.parents[j];
+          if (!graph.get(p1)!.spouses.includes(p2)) {
+            graph.get(p1)!.spouses.push(p2);
+          }
+          if (!graph.get(p2)!.spouses.includes(p1)) {
+            graph.get(p2)!.spouses.push(p1);
+          }
+        }
+      }
+    }
+  }
+
   // Find roots (nodes with no parents)
   const roots = people.filter(p => graph.get(p.id)!.parents.length === 0);
   
