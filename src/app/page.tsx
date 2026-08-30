@@ -20,18 +20,18 @@ export default async function LandingPage() {
           <span>Our Family</span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-600">
           <Link href="#" className="hover:text-slate-900">{t('nav.features')}</Link>
           <Link href="#" className="hover:text-slate-900">{t('nav.howItWorks')}</Link>
           <Link href="#" className="hover:text-slate-900">{t('nav.pricing')}</Link>
           <Link href="#" className="hover:text-slate-900">{t('nav.about')}</Link>
-          <LanguageSwitcher />
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <LanguageSwitcher />
           <Link 
             href="/create-family" 
-            className={cn(buttonVariants({ size: "default" }), "rounded-full px-6 font-semibold shadow-md")}
+            className={cn(buttonVariants({ size: "default" }), "rounded-full px-4 sm:px-6 font-semibold shadow-md")}
           >
             {t('nav.getStarted')}
           </Link>
@@ -68,11 +68,11 @@ export default async function LandingPage() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-8 pt-12 border-t border-slate-100">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-12 border-t border-slate-100">
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2 text-primary">
                 <Users size={20} />
-                <span className="font-bold text-xl text-slate-900">1,247+</span>
+                <span className="font-bold text-lg sm:text-xl text-slate-900">1,247+</span>
               </div>
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{t('stats.families')}</span>
             </div>
@@ -80,7 +80,7 @@ export default async function LandingPage() {
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2 text-primary">
                 <Users size={20} />
-                <span className="font-bold text-xl text-slate-900">25,000+</span>
+                <span className="font-bold text-lg sm:text-xl text-slate-900">25,000+</span>
               </div>
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{t('stats.members')}</span>
             </div>
@@ -88,7 +88,7 @@ export default async function LandingPage() {
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2 text-primary">
                 <Trees size={20} />
-                <span className="font-bold text-xl text-slate-900">500+</span>
+                <span className="font-bold text-lg sm:text-xl text-slate-900">500+</span>
               </div>
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{t('stats.generations')}</span>
             </div>
