@@ -6,15 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { buttonVariants } from '@/components/ui/button';
 import { calculateGenerations } from '@/lib/family-tree/generations';
 import { cn } from '@/lib/utils';
-import { 
-  Trees, 
-  LayoutDashboard, 
-  Network, 
-  Users, 
-  GitBranch, 
-  Search, 
-  Image as ImageIcon, 
-  Calendar, 
+import {
+  Trees,
+  LayoutDashboard,
+  Network,
+  Users,
+  GitBranch,
+  Search,
+  Image as ImageIcon,
+  Calendar,
   Settings,
   Plus,
   User
@@ -80,25 +80,25 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
     { label: t('stats.members'), value: peopleCount || 0 },
     { label: t('stats.contributors', { defaultMessage: 'Contributors' }), value: contributorCount || 1 },
     { label: t('stats.branches', { defaultMessage: 'Branches' }), value: branchCount || 0 },
-    { label: t('stats.generations'), value: maxGenerations }, 
+    { label: t('stats.generations'), value: maxGenerations },
   ];
 
   const recentMembers = (recentPeople || []).map(p => ({
     name: p.name,
-    time: "Recently added", 
+    time: "Recently added",
     img: p.name.charAt(0).toUpperCase()
   }));
 
   const recentActivity = (recentPeople || []).map(p => ({
-    text: `You added ${p.name}`, 
-    time: "Just now", 
+    text: `New member ${p.name} was added`,
+    time: "Just now",
     color: "bg-blue-500",
     icon: User
   }));
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-10">
-      
+
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -106,8 +106,8 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
           <p className="text-slate-800 font-medium text-[15px]">{t('header.welcome', { name: user.name })}</p>
         </div>
         <div>
-          <Link 
-            href={`/family/${resolvedParams.familyId}/people/new`} 
+          <Link
+            href={`/family/${resolvedParams.familyId}/people/new`}
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#1E763A] hover:bg-emerald-800 text-white text-sm font-semibold rounded-md shadow-sm transition-all"
           >
             <Plus size={18} strokeWidth={2.5} /> {t('header.addPerson', { defaultMessage: 'Add Person' })}
@@ -129,7 +129,7 @@ export default async function FamilyDashboard({ params }: { params: Promise<{ fa
 
       {/* Bottom Split Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
+
         {/* Recently Added Members */}
         <Card className="border-slate-200 shadow-sm rounded-xl">
           <div className="px-6 pt-6 pb-4">
