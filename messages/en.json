@@ -5,54 +5,104 @@
     "back": "Back"
   },
   "landing": {
-    "title": "Our Family",
-    "howItWorks": "How it works",
-    "heroTitle1": "Preserve your family story.",
-    "heroTitle2": "Build your family tree together.",
-    "heroSubtitle": "Invite relatives. Connect generations.",
-    "createFamilyBtn": "Create a Family",
+    "nav": {
+      "features": "Features",
+      "howItWorks": "How it Works",
+      "pricing": "Pricing",
+      "about": "About",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "title1": "Preserve Your Legacy.",
+      "title2": "Connect Your Family.",
+      "subtitle": "Build your family tree together. Share your stories, discover your roots and stay connected."
+    },
+    "createFamilyBtn": "Create Family",
     "joinFamilyBtn": "Join Family",
-    "footer": "Simple • Private • Collaborative"
+    "stats": {
+      "families": "Families",
+      "members": "Members",
+      "generations": "Generations"
+    },
+    "illustrationPlaceholder": "Family Tree Illustration"
   },
   "createFamily": {
     "title": "Create Your Family",
-    "subtitle": "Start your family tree and invite your relatives.",
+    "subtitle": "Create a family and invite your relatives to build the tree together.",
     "familyNameLabel": "Family Name",
     "familyNamePlaceholder": "e.g. Sharma Family",
     "yourNameLabel": "Your Name",
     "yourNamePlaceholder": "Enter your name",
+    "roleLabel": "Your Role",
+    "rolePlaceholder": "Select your role",
+    "roleAdmin": "Admin",
+    "roleMember": "Member",
     "submitBtn": "Create Family",
-    "successTitle": "Family Created!",
-    "successSubtitle": "Your family space is ready."
+    "infoBoxText": "You will get a unique invite link to share with your family."
   },
   "joinFamily": {
     "title": "Join a Family",
-    "subtitle": "Enter the invite code shared by your family member.",
-    "codeLabel": "Invite Code",
-    "codePlaceholder": "e.g. ABCD1234",
+    "subtitle": "Enter the invite code or link shared by your family.",
+    "codeLabel": "Invite Code / Link",
+    "codePlaceholder": "Enter or paste invite link",
     "yourNameLabel": "Your Name",
     "yourNamePlaceholder": "Enter your name",
     "submitBtn": "Join Family",
-    "invalidCode": "Invalid or expired invite code."
-  },
-  "invite": {
-    "title": "Invite Your Family",
-    "subtitle": "Share this link with your relatives.",
-    "copyLinkBtn": "Copy Link",
-    "shareWhatsappBtn": "Share on WhatsApp",
-    "linkCopied": "Link copied to clipboard!"
+    "invalidCode": "Invalid or expired invite code.",
+    "infoBoxText": "Ask your family admin for the invite code to join the family."
   },
   "dashboard": {
-    "title": "Our Family",
-    "welcome": "Welcome, {name}.",
-    "membersCount": "Members",
-    "inviteBtn": "Invite Relatives",
-    "addMemberBtn": "+ Add Family Member",
-    "recentActivity": "Recent Activity",
-    "activityCreated": "You created the family",
-    "justNow": "Just now",
-    "emptyStateTitle": "Your family tree is just beginning.",
-    "emptyStateSubtitle": "Add your first family member and start connecting generations.",
-    "comingSoon": "Coming Soon"
+    "nav": {
+      "dashboard": "Dashboard",
+      "familyTree": "Family Tree",
+      "people": "People",
+      "branches": "Branches",
+      "relationshipFinder": "Relationship Finder",
+      "photos": "Photos",
+      "events": "Events",
+      "settings": "Settings"
+    },
+    "header": {
+      "title": "Dashboard",
+      "welcome": "Welcome back, {name}",
+      "addPerson": "Add Person"
+    },
+    "stats": {
+      "members": "Members",
+      "generations": "Generations",
+      "branches": "Branches",
+      "photos": "Photos"
+    },
+    "recentMembers": {
+      "title": "Recently Added Members",
+      "viewAll": "View All"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "viewAll": "View All"
+    }
+  },
+  "invite": {
+    "title": "Invite Members",
+    "subtitle": "Share the link or invite members to join the family.",
+    "backToDashboard": "← Back to Dashboard",
+    "linkSection": {
+      "label": "Invite Link",
+      "copy": "Copy Link",
+      "copied": "Copied",
+      "generating": "Generating..."
+    },
+    "shareSection": {
+      "label": "Share via",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook",
+      "email": "Email",
+      "more": "More"
+    },
+    "membersSection": {
+      "label": "Invited Members",
+      "joined": "Joined",
+      "pending": "Pending"
+    }
   }
 }

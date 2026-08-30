@@ -1,58 +1,108 @@
 {
   "common": {
     "loading": "लोड हो रहा है...",
-    "error": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "error": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
     "back": "वापस"
   },
   "landing": {
-    "title": "हमारा परिवार",
-    "howItWorks": "यह कैसे काम करता है",
-    "heroTitle1": "अपने परिवार की कहानी सहेजें।",
-    "heroTitle2": "मिलकर अपना परिवार वृक्ष बनाएं।",
-    "heroSubtitle": "रिश्तेदारों को आमंत्रित करें। पीढ़ियों को जोड़ें।",
+    "nav": {
+      "features": "विशेषताएं",
+      "howItWorks": "कैसे काम करता है",
+      "pricing": "मूल्य निर्धारण",
+      "about": "हमारे बारे में",
+      "getStarted": "शुरू करें"
+    },
+    "hero": {
+      "title1": "अपनी विरासत को सुरक्षित रखें।",
+      "title2": "अपने परिवार को जोड़ें।",
+      "subtitle": "एक साथ मिलकर अपना फैमिली ट्री बनाएं। अपनी कहानियाँ साझा करें, अपनी जड़ों को जानें और जुड़े रहें।"
+    },
     "createFamilyBtn": "परिवार बनाएं",
-    "joinFamilyBtn": "परिवार में शामिल हों",
-    "footer": "सरल • निजी • सहयोगी"
+    "joinFamilyBtn": "परिवार से जुड़ें",
+    "stats": {
+      "families": "परिवार",
+      "members": "सदस्य",
+      "generations": "पीढ़ियाँ"
+    },
+    "illustrationPlaceholder": "फैमिली ट्री चित्र"
   },
   "createFamily": {
     "title": "अपना परिवार बनाएं",
-    "subtitle": "अपना परिवार वृक्ष शुरू करें और रिश्तेदारों को आमंत्रित करें।",
+    "subtitle": "एक परिवार बनाएं और ट्री बनाने के लिए अपने रिश्तेदारों को आमंत्रित करें।",
     "familyNameLabel": "परिवार का नाम",
-    "familyNamePlaceholder": "जैसे शर्मा परिवार",
+    "familyNamePlaceholder": "उदा. शर्मा परिवार",
     "yourNameLabel": "आपका नाम",
     "yourNamePlaceholder": "अपना नाम दर्ज करें",
+    "roleLabel": "आपकी भूमिका",
+    "rolePlaceholder": "अपनी भूमिका चुनें",
+    "roleAdmin": "व्यवस्थापक (Admin)",
+    "roleMember": "सदस्य (Member)",
     "submitBtn": "परिवार बनाएं",
-    "successTitle": "परिवार बन गया!",
-    "successSubtitle": "आपके परिवार का स्थान तैयार है।"
+    "infoBoxText": "आपको अपने परिवार के साथ साझा करने के लिए एक अनूठा आमंत्रण लिंक मिलेगा।"
   },
   "joinFamily": {
-    "title": "परिवार में शामिल हों",
-    "subtitle": "अपने परिवार के सदस्य द्वारा साझा किया गया आमंत्रण कोड दर्ज करें।",
-    "codeLabel": "आमंत्रण कोड",
-    "codePlaceholder": "जैसे ABCD1234",
+    "title": "परिवार से जुड़ें",
+    "subtitle": "अपने परिवार द्वारा साझा किया गया आमंत्रण कोड या लिंक दर्ज करें।",
+    "codeLabel": "आमंत्रण कोड / लिंक",
+    "codePlaceholder": "आमंत्रण लिंक दर्ज करें या पेस्ट करें",
     "yourNameLabel": "आपका नाम",
     "yourNamePlaceholder": "अपना नाम दर्ज करें",
-    "submitBtn": "परिवार में शामिल हों",
-    "invalidCode": "अमान्य या समाप्त आमंत्रण कोड।"
-  },
-  "invite": {
-    "title": "अपने परिवार को आमंत्रित करें",
-    "subtitle": "इस लिंक को अपने रिश्तेदारों के साथ साझा करें।",
-    "copyLinkBtn": "लिंक कॉपी करें",
-    "shareWhatsappBtn": "WhatsApp पर साझा करें",
-    "linkCopied": "लिंक क्लिपबोर्ड पर कॉपी हो गया!"
+    "submitBtn": "परिवार से जुड़ें",
+    "invalidCode": "अमान्य या समाप्त आमंत्रण कोड।",
+    "infoBoxText": "परिवार में शामिल होने के लिए आमंत्रण कोड के लिए अपने परिवार के एडमिन से पूछें।"
   },
   "dashboard": {
-    "title": "हमारा परिवार",
-    "welcome": "स्वागत है, {name}।",
-    "membersCount": "सदस्य",
-    "inviteBtn": "रिश्तेदारों को आमंत्रित करें",
-    "addMemberBtn": "+ परिवार का सदस्य जोड़ें",
-    "recentActivity": "हाल की गतिविधि",
-    "activityCreated": "आपने परिवार बनाया",
-    "justNow": "अभी-अभी",
-    "emptyStateTitle": "आपका परिवार वृक्ष अभी शुरू हो रहा है।",
-    "emptyStateSubtitle": "अपने पहले परिवार के सदस्य को जोड़ें और पीढ़ियों को जोड़ना शुरू करें।",
-    "comingSoon": "जल्द आ रहा है"
+    "nav": {
+      "dashboard": "डैशबोर्ड",
+      "familyTree": "फैमिली ट्री",
+      "people": "लोग",
+      "branches": "शाखाएं",
+      "relationshipFinder": "रिश्ता खोजक",
+      "photos": "तस्वीरें",
+      "events": "कार्यक्रम",
+      "settings": "सेटिंग्स"
+    },
+    "header": {
+      "title": "डैशबोर्ड",
+      "welcome": "वापसी पर स्वागत है, {name}",
+      "addPerson": "व्यक्ति जोड़ें"
+    },
+    "stats": {
+      "members": "सदस्य",
+      "generations": "पीढ़ियाँ",
+      "branches": "शाखाएं",
+      "photos": "तस्वीरें"
+    },
+    "recentMembers": {
+      "title": "हाल ही में जोड़े गए सदस्य",
+      "viewAll": "सभी देखें"
+    },
+    "recentActivity": {
+      "title": "हाल की गतिविधि",
+      "viewAll": "सभी देखें"
+    }
+  },
+  "invite": {
+    "title": "सदस्यों को आमंत्रित करें",
+    "subtitle": "लिंक साझा करें या सदस्यों को परिवार में शामिल होने के लिए आमंत्रित करें।",
+    "backToDashboard": "← डैशबोर्ड पर वापस जाएं",
+    "linkSection": {
+      "label": "आमंत्रण लिंक",
+      "copy": "लिंक कॉपी करें",
+      "copied": "कॉपी किया गया",
+      "generating": "बन रहा है..."
+    },
+    "shareSection": {
+      "label": "इसके माध्यम से साझा करें",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook",
+      "email": "ईमेल",
+      "more": "अधिक"
+    },
+    "membersSection": {
+      "label": "आमंत्रित सदस्य",
+      "joined": "शामिल हो गए",
+      "pending": "लंबित"
+    }
   }
 }
